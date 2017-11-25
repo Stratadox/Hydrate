@@ -1,5 +1,7 @@
 # Hydrate
 
+[![Build Status](https://travis-ci.org/Stratadox/Hydrate.svg?branch=master)](https://travis-ci.org/Stratadox/Hydrate)
+
 The Hydrate module contains all that is needed to hydrate objects from an array
 of data. This data could come from a sql database, a document store, a web API 
 or any other source.
