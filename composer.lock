@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "ada11951f011c914e3a544f77f9d8019",
-    "content-hash": "43722bec4a2a4f6e923e7794c86f8cf3",
+    "hash": "be73a08cca6e8303517b8f782490adb0",
+    "content-hash": "f2fcceeabd65bab3e925366ee3e3f4f1",
     "packages": [
         {
             "name": "stratadox/collection-contracts",
@@ -1111,6 +1111,51 @@
                 "xunit"
             ],
             "time": "2017-08-03 14:08:16"
+        },
+        {
+            "name": "rpkamp/fancy-testdox-printer",
+            "version": "0.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/rpkamp/fancy-testdox-printer.git",
+                "reference": "89d49736921ddcf73785e39db4fed6219a813d91"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/rpkamp/fancy-testdox-printer/zipball/89d49736921ddcf73785e39db4fed6219a813d91",
+                "reference": "89d49736921ddcf73785e39db4fed6219a813d91",
+                "shasum": ""
+            },
+            "require": {
+                "phpunit/phpunit": "^6.0"
+            },
+            "require-dev": {
+                "squizlabs/php_codesniffer": "^3.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "rpkamp\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Remon van de Kamp",
+                    "email": "rpkamp@gmail.com",
+                    "homepage": "https://www.rpkamp.com/"
+                }
+            ],
+            "description": "A fancy testdox printer for PHPUnit",
+            "keywords": [
+                "phpunit",
+                "printer",
+                "testdox"
+            ],
+            "time": "2017-10-12 20:20:32"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
