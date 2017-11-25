@@ -13,7 +13,7 @@ The Hydrate package contains no code per se, instead it composes several sub-pac
 Classes that produce hydrated objects.
 
 [:smiley_cat:](https://github.com/Stratadox/Hydrator)
-[![Build Status](https://travis-ci.org/Stratadox/Hydrator.svg?branch=master)](https://travis-ci.org/Stratadox/ImmutableCollection)
+[![Build Status](https://travis-ci.org/Stratadox/Hydrator.svg?branch=master)](https://travis-ci.org/Stratadox/Hydrator)
 [![Coverage Status](https://coveralls.io/repos/github/Stratadox/Hydrator/badge.svg?branch=master)](https://coveralls.io/github/Stratadox/Hydrator?branch=master)
 
 ### The hydration mapping package: 
