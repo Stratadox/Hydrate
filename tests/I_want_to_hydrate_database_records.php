@@ -6,7 +6,7 @@ namespace Stratadox\Hydrate;
 
 use PHPUnit\Framework\TestCase;
 use SQLite3;
-use Stratadox\Hydrate\Test\Infrastructure\BookHydrationMapping;
+use Stratadox\Hydrate\Test\Infrastructure\BookHydrator;
 use Stratadox\Hydration\Hydrates;
 use Stratadox\Hydrate\Test\Model\Author;
 use Stratadox\Hydrate\Test\Model\Book;
@@ -16,10 +16,7 @@ use Stratadox\Hydrate\Test\Model\Title;
 
 class I_want_to_hydrate_database_records extends TestCase
 {
-    use BookHydrationMapping;
-
-    const DATABASE_DIRECTORY = __DIR__;
-    const DATABASE_FILE = self::DATABASE_DIRECTORY . '/books.sqlite';
+    const DATABASE_FILE = 'tests/books.sqlite';
 
     /** @var SQLite3 */
     private $database;
@@ -125,6 +122,6 @@ class I_want_to_hydrate_database_records extends TestCase
         foreach (require('Infrastructure/Database.php') as $statement) {
             $this->database->exec($statement);
         }
-        $this->books = $this->bookHydrator($this->database);
+        $this->books = BookHydrator::withAccessTo($this->database);
     }
 }
