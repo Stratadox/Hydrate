@@ -1,0 +1,25 @@
+{
+    "name": "stratadox/hydrate",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Stratadox",
+            "homepage": "http://www.stratadox.com/"
+        }
+    ],
+    "autoload-dev": {
+        "psr-4": {
+            "Stratadox\\Hydrate\\Test\\": "tests"
+        }
+    },
+    "require": {
+        "php": ">=7.1",
+        "stratadox/hydration": "^1.3",
+        "stratadox/hydration-mapping": "^1.0",
+        "stratadox/hydration-proxies": "^1.0",
+        "stratadox/hydrator": "^1.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^6.3"
+    }
+}
