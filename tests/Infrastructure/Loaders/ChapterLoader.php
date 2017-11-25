@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Stratadox\Hydrate\Test\Infrastructure\Loaders;
 
 use SQLite3;
+use SQLite3Result;
 use Stratadox\Hydrate\Test\Model\Book;
-use Stratadox\Hydrate\Test\Model\Chapter;
 use Stratadox\Hydration\Hydrates;
 use Stratadox\Hydration\LoadsProxiedObjects;
 use Stratadox\Hydration\Proxying\Loader;
@@ -33,12 +33,17 @@ class ChapterLoader extends Loader
         parent::__construct($book, '', $chapter);
     }
 
-    protected function doLoadTheInstanceDearest($book, string $property, $chapter = null)
+    protected function doLoadTheInstanceDearest($book, string $property, $forTheChapter = null)
     {
-        return $this->loadTheChapterOfThe($book, $chapter);
+        $result = $this->fetchTheContentsInThe($book, $forTheChapter);
+        $elements = [$this->titleLoader->loadTheInstance()];
+        while ($data = $result->fetchArray(SQLITE3_ASSOC)) {
+            $elements[] = $this->hydrateTheText->fromArray($data);
+        }
+        return $this->hydrateTheChapter->fromArray($elements);
     }
 
-    private function loadTheChapterOfThe(Book $book, int $chapter = null) : Chapter
+    private function fetchTheContentsInThe(Book $toRead, int $chapter = null) : SQLite3Result
     {
         $query = $this->database->prepare(
             'SELECT `text`.`contents` as `text`
@@ -48,14 +53,8 @@ class ChapterLoader extends Loader
               `content`.`chapter_number` = :chapter
             );'
         );
-        $query->bindValue('book', $book->isbn());
+        $query->bindValue('book', $toRead->isbn());
         $query->bindValue('chapter', $chapter);
-        $result = $query->execute();
-
-        $elements = [$this->titleLoader->loadTheInstance()];
-        while ($data = $result->fetchArray(SQLITE3_ASSOC)) {
-            $elements[] = $this->hydrateTheText->fromArray($data);
-        }
-        return $this->hydrateTheChapter->fromArray($elements);
+        return $query->execute();
     }
 }
