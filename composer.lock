@@ -123,16 +123,16 @@
         },
         {
             "name": "stratadox/hydration-proxies",
-            "version": "v1.1",
+            "version": "v1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Stratadox/HydrationProxies.git",
-                "reference": "73f5521807343ebe3d2502e069eab6a284e04081"
+                "reference": "8b85956aa54c0b64d8d7181ad129a20733c895d1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Stratadox/HydrationProxies/zipball/73f5521807343ebe3d2502e069eab6a284e04081",
-                "reference": "73f5521807343ebe3d2502e069eab6a284e04081",
+                "url": "https://api.github.com/repos/Stratadox/HydrationProxies/zipball/8b85956aa54c0b64d8d7181ad129a20733c895d1",
+                "reference": "8b85956aa54c0b64d8d7181ad129a20733c895d1",
                 "shasum": ""
             },
             "require": {
@@ -162,7 +162,7 @@
                     "homepage": "http://www.stratadox.com/"
                 }
             ],
-            "time": "2017-11-24 00:14:17"
+            "time": "2017-11-25 18:35:46"
         },
         {
             "name": "stratadox/hydrator",
