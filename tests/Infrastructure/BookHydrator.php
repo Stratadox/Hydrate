@@ -23,6 +23,7 @@ use Stratadox\Hydrate\Test\Model\ChapterProxy;
 use Stratadox\Hydrate\Test\Model\Contents;
 use Stratadox\Hydrate\Test\Model\Isbn;
 use Stratadox\Hydrate\Test\Model\Title;
+use Stratadox\Hydration\Proxying\AlterableCollectionEntryUpdaterFactory;
 use Stratadox\Hydration\Proxying\ProxyFactory;
 
 class BookHydrator implements Hydrates
@@ -68,7 +69,7 @@ class BookHydrator implements Hydrates
                                 SimpleHydrator::forThe(Title::class)
                             )
                         ),
-                        new ContentsUpdaterFactory
+                        new AlterableCollectionEntryUpdaterFactory
                     )
                 )
             ))
