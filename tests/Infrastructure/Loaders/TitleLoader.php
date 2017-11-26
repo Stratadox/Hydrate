@@ -28,14 +28,14 @@ class TitleLoader extends Loader
 
     protected function doLoad($book, string $property, $chapter = null)
     {
-        $result = $this->fetchTheTitleOfTheChapterInThe($book, $chapter);
+        $result = $this->fetchTheTitleForThe($book, $chapter);
         $title = $this->hydrateTheTitle->fromArray(
             $result->fetchArray(SQLITE3_ASSOC)
         );
         return $title;
     }
 
-    private function fetchTheTitleOfTheChapterInThe(Book $toRead, int $chapter = null) : SQLite3Result
+    private function fetchTheTitleForThe(Book $toRead, int $chapter = null) : SQLite3Result
     {
         $query = $this->database->prepare(
             'SELECT `chapter`.`title` as `title`
