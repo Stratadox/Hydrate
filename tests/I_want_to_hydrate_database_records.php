@@ -118,10 +118,8 @@ class I_want_to_hydrate_database_records extends TestCase
 
     protected function setUp() : void
     {
-        $this->database = new SQLite3(static::DATABASE_FILE);
-        foreach (require('Infrastructure/Database.php') as $statement) {
-            $this->database->exec($statement);
-        }
-        $this->books = BookHydrator::withAccessTo($this->database);
+        $di = require 'Infrastructure/DependencyContainer.php';
+        $this->database = $di->get('database');
+        $this->books = $di->get('make.book');
     }
 }
