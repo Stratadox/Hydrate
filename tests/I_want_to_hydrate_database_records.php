@@ -6,7 +6,6 @@ namespace Stratadox\Hydrate;
 
 use PHPUnit\Framework\TestCase;
 use SQLite3;
-use Stratadox\Hydrate\Test\Infrastructure\Hydrators\BookHydrator;
 use Stratadox\Hydration\Hydrates;
 use Stratadox\Hydrate\Test\Model\Author;
 use Stratadox\Hydrate\Test\Model\Book;
