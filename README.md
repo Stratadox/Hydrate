@@ -16,7 +16,7 @@ Classes that produce hydrated objects.
 [![Build Status](https://travis-ci.org/Stratadox/Hydrator.svg?branch=master)](https://travis-ci.org/Stratadox/Hydrator)
 [![Coverage Status](https://coveralls.io/repos/github/Stratadox/Hydrator/badge.svg?branch=master)](https://coveralls.io/github/Stratadox/Hydrator?branch=master)
 
-### The hydration mapping package: 
+### Hydration mapping
 Tools for mapping data structures to object properties.
 
 [:smiley_cat:](https://github.com/Stratadox/HydrationMapping)
@@ -24,7 +24,7 @@ Tools for mapping data structures to object properties.
 [![Coverage Status](https://coveralls.io/repos/github/Stratadox/HydrationMapping/badge.svg?branch=master)](https://coveralls.io/github/Stratadox/HydrationMapping?branch=master)
 
 
-### The hydration proxies package:
+### Hydration proxies
 Lazy loading through proxy objects.
 
 [:smiley_cat:](https://github.com/Stratadox/HydrationProxies)
