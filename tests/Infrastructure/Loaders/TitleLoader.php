@@ -26,7 +26,7 @@ class TitleLoader extends Loader
         parent::__construct($book, '', $chapter);
     }
 
-    protected function doLoadTheInstanceDearest($book, string $property, $chapter = null)
+    protected function doLoad($book, string $property, $chapter = null)
     {
         return $this->loadTheTitleOfTheChapterInThe($book, $chapter);
     }

@@ -33,7 +33,7 @@ class ChapterLoader extends Loader
         parent::__construct($book, '', $chapter);
     }
 
-    protected function doLoadTheInstanceDearest($book, string $property, $forTheChapter = null)
+    protected function doLoad($book, string $property, $forTheChapter = null)
     {
         $result = $this->fetchTheContentsInThe($book, $forTheChapter);
         $elements = [$this->titleLoader->loadTheInstance()];
