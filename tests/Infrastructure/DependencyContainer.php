@@ -40,11 +40,7 @@ $di->set('make.book', function () use ($di) {
         HasOneEmbedded::inProperty('author', $di->get('make.author')),
         HasManyProxies::inPropertyWithDifferentKey('contents', 'chapters',
             VariadicConstructor::forThe(Contents::class),
-            ProxyFactory::fromThis(
-                SimpleHydrator::forThe(ChapterProxy::class),
-                ChapterLoaderFactory::withAccessTo($di->get('database')),
-                new AlterableCollectionEntryUpdaterFactory
-            )
+            $di->get('make.chapter.proxies')
         ),
         StringValue::inProperty('format')
     ));
@@ -67,6 +63,14 @@ $di->set('make.author', function () {
         StringValue::inPropertyWithDifferentKey('firstName', 'author_first_name'),
         StringValue::inPropertyWithDifferentKey('lastName', 'author_last_name')
     ));
+});
+
+$di->set('make.chapter.proxies', function () use ($di) {
+    return ProxyFactory::fromThis(
+        SimpleHydrator::forThe(ChapterProxy::class),
+        ChapterLoaderFactory::withAccessTo($di->get('database')),
+        new AlterableCollectionEntryUpdaterFactory
+    );
 });
 
 return $di;
