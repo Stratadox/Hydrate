@@ -5,9 +5,12 @@ declare(strict_types=1);
 namespace Stratadox\Hydrate\Test\Infrastructure\Loaders;
 
 use SQLite3;
-use Stratadox\Hydrate\Test\Infrastructure\Loaders\ChapterLoader;
 use Stratadox\Hydrate\Test\Model\Book;
+use Stratadox\Hydrate\Test\Model\Chapter;
+use Stratadox\Hydrate\Test\Model\Text;
 use Stratadox\Hydration\Hydrates;
+use Stratadox\Hydration\Hydrator\SimpleHydrator;
+use Stratadox\Hydration\Hydrator\VariadicConstructor;
 use Stratadox\Hydration\LoadsProxiedObjects;
 use Stratadox\Hydration\ProducesProxyLoaders;
 
@@ -28,6 +31,16 @@ class ChapterLoaderFactory implements ProducesProxyLoaders
         $this->hydrateTheText = $text;
         $this->hydrateTheChapter = $chapter;
         $this->produceTitleLoader = $produceTitleLoaders;
+    }
+
+    public static function withAccessTo(SQLite3 $database)
+    {
+        return new static(
+            $database,
+            SimpleHydrator::forThe(Text::class),
+            VariadicConstructor::forThe(Chapter::class),
+            TitleLoaderFactory::withAccessTo($database)
+        );
     }
 
     public function makeLoaderFor(

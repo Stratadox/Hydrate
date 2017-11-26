@@ -7,7 +7,9 @@ namespace Stratadox\Hydrate\Test\Infrastructure\Loaders;
 use SQLite3;
 use Stratadox\Hydrate\Test\Infrastructure\Loaders\TitleLoader;
 use Stratadox\Hydrate\Test\Model\Book;
+use Stratadox\Hydrate\Test\Model\Title;
 use Stratadox\Hydration\Hydrates;
+use Stratadox\Hydration\Hydrator\SimpleHydrator;
 use Stratadox\Hydration\LoadsProxiedObjects;
 use Stratadox\Hydration\ProducesProxyLoaders;
 
@@ -22,6 +24,11 @@ class TitleLoaderFactory implements ProducesProxyLoaders
     ) {
         $this->database = $database;
         $this->hydrateTheTitle = $title;
+    }
+
+    public static function withAccessTo(SQLite3 $database)
+    {
+        return new static($database, SimpleHydrator::forThe(Title::class));
     }
 
     public function makeLoaderFor(
