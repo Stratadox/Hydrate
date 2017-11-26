@@ -46,8 +46,7 @@ class I_want_to_hydrate_database_records extends TestCase
     /** @scenario */
     function accessing_data_that_was_not_in_the_original_result_set()
     {
-        /** @var Book $book */
-        $book = $this->books->fromArray($this->selectBookDataByIsbn('9781493634149'));
+        $book = $this->bookByIsbn('9781493634149');
 
         $this->assertEquals(
             Author::named('Elle', 'Garner'),
@@ -66,7 +65,7 @@ class I_want_to_hydrate_database_records extends TestCase
     /** @scenario */
     function changing_database_values_before_lazily_loading_the_data_affects_the_loaded_object()
     {
-        $book = $this->books->fromArray($this->selectBookDataByIsbn('9781493634149'));
+        $book = $this->bookByIsbn('9781493634149');
 
         $randomContent = 'Random content: ' . microtime() .' / '. rand();
 
@@ -81,7 +80,7 @@ class I_want_to_hydrate_database_records extends TestCase
     /** @scenario */
     function changing_database_values_after_lazily_loading_the_data_does_not_affect_the_loaded_object()
     {
-        $book = $this->books->fromArray($this->selectBookDataByIsbn('9781493634149'));
+        $book = $this->bookByIsbn('9781493634149');
 
         $book->textInChapter(2);
 
@@ -93,6 +92,11 @@ class I_want_to_hydrate_database_records extends TestCase
             "Purchase book for actual content of chapter 2...",
             $book->textInChapter(2)
         );
+    }
+
+    private function bookByIsbn($code) : Book
+    {
+        return $this->books->fromArray($this->selectBookDataByIsbn($code));
     }
 
     private function selectBookDataByIsbn(string $isbn)
