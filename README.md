@@ -33,3 +33,15 @@ Lazy loading through proxy objects.
 
 ### Hydration 
 Interfaces for the above subpackages.
+
+[:smiley_cat:](https://github.com/Stratadox/Hydration)
+
+## Integration tests
+This package contains tests that assert the packages work well together.
+
+These tests do not generate code coverage; the code coverage statistics shown 
+above are for solely for the unit tests.
+
+### Hydrate database records
+This class of tests asserts that (sqlite) database records get converted to an
+object graph, lazily loading some of the objects.
