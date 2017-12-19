@@ -13,6 +13,9 @@ use Stratadox\Hydrate\Test\Model\Contents;
 use Stratadox\Hydrate\Test\Model\Isbn;
 use Stratadox\Hydrate\Test\Model\Title;
 
+/**
+ * @coversNothing
+ */
 class Hydrating_database_records extends TestCase
 {
     const DATABASE_FILE = 'tests/books.sqlite';
