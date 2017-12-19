@@ -23,9 +23,9 @@ use Stratadox\Hydration\Mapping\Property\Scalar\StringValue;
 use Stratadox\Hydration\Proxying\AlterableCollectionEntryUpdaterFactory;
 use Stratadox\Hydration\Proxying\ProxyFactory;
 
-$di = new Container;
+$container = new Container;
 
-$di->set('database', function () use ($di) {
+$container->set('database', function () use ($container) {
     $database = new SQLite3('../books.sqlite');
     foreach (require('Database.php') as $statement) {
         $database->exec($statement);
@@ -33,44 +33,44 @@ $di->set('database', function () use ($di) {
     return $database;
 });
 
-$di->set('books', function () use ($di) {
+$container->set('books', function () use ($container) {
     return MappedHydrator::fromThis(Mapping::ofThe(Book::class,
-        HasOneEmbedded::inProperty('title', $di->get('title')),
-        HasOneEmbedded::inProperty('isbn', $di->get('isbn')),
-        HasOneEmbedded::inProperty('author', $di->get('author')),
+        HasOneEmbedded::inProperty('title', $container->get('title')),
+        HasOneEmbedded::inProperty('isbn', $container->get('isbn')),
+        HasOneEmbedded::inProperty('author', $container->get('author')),
         HasManyProxies::inPropertyWithDifferentKey('contents', 'chapters',
             VariadicConstructor::forThe(Contents::class),
-            $di->get('chapterProxies')
+            $container->get('chapterProxies')
         ),
         StringValue::inProperty('format')
     ));
 });
 
-$di->set('title', function () {
+$container->set('title', function () {
     return MappedHydrator::fromThis(Mapping::ofThe(Title::class,
         StringValue::inProperty('title')
     ));
 });
 
-$di->set('isbn', function () {
+$container->set('isbn', function () {
     return MappedHydrator::fromThis(Mapping::ofThe(Isbn::class,
         StringValue::inPropertyWithDifferentKey('code', 'id')
     ));
 });
 
-$di->set('author', function () {
+$container->set('author', function () {
     return MappedHydrator::fromThis(Mapping::ofThe(Author::class,
         StringValue::inPropertyWithDifferentKey('firstName', 'author_first_name'),
         StringValue::inPropertyWithDifferentKey('lastName', 'author_last_name')
     ));
 });
 
-$di->set('chapterProxies', function () use ($di) {
+$container->set('chapterProxies', function () use ($container) {
     return ProxyFactory::fromThis(
         SimpleHydrator::forThe(ChapterProxy::class),
-        ChapterLoaderFactory::withAccessTo($di->get('database')),
+        ChapterLoaderFactory::withAccessTo($container->get('database')),
         new AlterableCollectionEntryUpdaterFactory
     );
 });
 
-return $di;
+return $container;
