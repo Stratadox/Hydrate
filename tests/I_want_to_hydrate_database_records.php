@@ -121,8 +121,8 @@ class I_want_to_hydrate_database_records extends TestCase
 
     protected function setUp() : void
     {
-        $di = require 'Infrastructure/DependencyContainer.php';
-        $this->database = $di->get('database');
-        $this->books = $di->get('make.book');
+        $dependencies = require 'Infrastructure/DependencyContainer.php';
+        $this->database = $dependencies->get('database');
+        $this->books = $dependencies->get('books');
     }
 }

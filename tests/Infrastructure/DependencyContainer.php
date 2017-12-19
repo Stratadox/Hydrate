@@ -33,39 +33,39 @@ $di->set('database', function () use ($di) {
     return $database;
 });
 
-$di->set('make.book', function () use ($di) {
+$di->set('books', function () use ($di) {
     return MappedHydrator::fromThis(Mapping::ofThe(Book::class,
-        HasOneEmbedded::inProperty('title', $di->get('make.title')),
-        HasOneEmbedded::inProperty('isbn', $di->get('make.isbn')),
-        HasOneEmbedded::inProperty('author', $di->get('make.author')),
+        HasOneEmbedded::inProperty('title', $di->get('title')),
+        HasOneEmbedded::inProperty('isbn', $di->get('isbn')),
+        HasOneEmbedded::inProperty('author', $di->get('author')),
         HasManyProxies::inPropertyWithDifferentKey('contents', 'chapters',
             VariadicConstructor::forThe(Contents::class),
-            $di->get('make.chapter.proxies')
+            $di->get('chapterProxies')
         ),
         StringValue::inProperty('format')
     ));
 });
 
-$di->set('make.title', function () {
+$di->set('title', function () {
     return MappedHydrator::fromThis(Mapping::ofThe(Title::class,
         StringValue::inProperty('title')
     ));
 });
 
-$di->set('make.isbn', function () {
+$di->set('isbn', function () {
     return MappedHydrator::fromThis(Mapping::ofThe(Isbn::class,
         StringValue::inPropertyWithDifferentKey('code', 'id')
     ));
 });
 
-$di->set('make.author', function () {
+$di->set('author', function () {
     return MappedHydrator::fromThis(Mapping::ofThe(Author::class,
         StringValue::inPropertyWithDifferentKey('firstName', 'author_first_name'),
         StringValue::inPropertyWithDifferentKey('lastName', 'author_last_name')
     ));
 });
 
-$di->set('make.chapter.proxies', function () use ($di) {
+$di->set('chapterProxies', function () use ($di) {
     return ProxyFactory::fromThis(
         SimpleHydrator::forThe(ChapterProxy::class),
         ChapterLoaderFactory::withAccessTo($di->get('database')),
