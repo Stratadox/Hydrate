@@ -97,6 +97,14 @@ class Hydrating_database_records extends TestCase
         );
     }
 
+    /** @scenario */
+    function deriving_property_values_from_the_available_data()
+    {
+        $book = $this->bookByIsbn('9781493634149');
+
+        $this->assertTrue($book->hasIsbnVersion13());
+    }
+
     private function bookByIsbn($code) : Book
     {
         return $this->books->fromArray($this->selectBookDataByIsbn($code));
