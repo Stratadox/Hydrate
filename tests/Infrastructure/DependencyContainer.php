@@ -17,11 +17,13 @@ use Stratadox\Hydration\Hydrator\MappedHydrator;
 use Stratadox\Hydration\Hydrator\SimpleHydrator;
 use Stratadox\Hydration\Hydrator\VariadicConstructor;
 use Stratadox\Hydration\Mapping\Mapping;
+use Stratadox\Hydration\Mapping\Property\Dynamic\ClosureResult;
 use Stratadox\Hydration\Mapping\Property\Relationship\HasManyProxies;
 use Stratadox\Hydration\Mapping\Property\Relationship\HasOneEmbedded;
 use Stratadox\Hydration\Mapping\Property\Scalar\StringValue;
 use Stratadox\Hydration\Proxying\AlterableCollectionEntryUpdaterFactory;
 use Stratadox\Hydration\Proxying\ProxyFactory;
+use function strlen;
 
 $container = new Container;
 
@@ -54,7 +56,10 @@ $container->set('title', function () {
 
 $container->set('isbn', function () {
     return MappedHydrator::fromThis(Mapping::ofThe(Isbn::class,
-        StringValue::inPropertyWithDifferentKey('code', 'id')
+        StringValue::inPropertyWithDifferentKey('code', 'id'),
+        ClosureResult::inProperty('version', function (array $data) {
+            return strlen($data['id']);
+        })
     ));
 });
 
