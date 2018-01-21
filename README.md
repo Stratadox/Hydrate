@@ -53,58 +53,51 @@ like this:
 +------------+---------------+-------------------+------------------+----------------------------+
 ```
 
-...into an object graph like this:
+...into an object structure like this:
 
 ```
 array(2) {
-  [0]=>
-  object(Book)#1 (4) {
-    ["title"]=>
-    object(Title)#2 (1) {
-      ["title"]=>
-      string(10) "Book Title"
+  [0] => object(Book)#1 (4) {
+    ["title"] => object(Title)#2 (1) {
+      ["title"] => string(10) "Book Title"
     }
-    ["isbn"]=>
-    object(Isbn)#3 (1) {
-      ["code"]=>
-      string(10) "1234567890"
+    ["isbn"] => object(Isbn)#3 (1) {
+      ["code"] => string(10) "1234567890"
     }
-    ["author"]=>
-    object(Author)#4 (2) {
-      ["firstName"]=>
-      string(4) "John"
-      ["lastName"]=>
-      string(3) "Doe"
+    ["author"] => object(Author)#4 (2) {
+      ["firstName"] => string(4) "John"
+      ["lastName"] => string(3) "Doe"
     }
-    ["contents"]=>
-    string(26) "Lorem ipsum dolor sit amed"
+    ["contents"] => string(26) "Lorem ipsum dolor sit amed"
   }
-  [1]=>
-  object(Book)#1 (4) {
-    ["title"]=>
-    object(Title)#2 (1) {
-      ["title"]=>
-      string(10) "Foo, bar, baz"
+  [1] => object(Book)#1 (4) {
+    ["title"] => object(Title)#2 (1) {
+      ["title"] => string(10) "Foo, bar, baz"
     }
-    ["isbn"]=>
-    object(Isbn)#3 (1) {
-      ["code"]=>
-      string(10) "9876543210"
+    ["isbn"] => object(Isbn)#3 (1) {
+      ["code"] => string(10) "9876543210"
     }
-    ["author"]=>
-    object(Author)#4 (2) {
-      ["firstName"]=>
-      string(4) "Jackie"
-      ["lastName"]=>
-      string(3) "Chan"
+    ["author"] => object(Author)#4 (2) {
+      ["firstName"] => string(4) "Jackie"
+      ["lastName"] => string(3) "Chan"
     }
-    ["contents"]=>
-    string(26) "Lorem ipsum dolor sit amed"
+    ["contents"] => string(26) "Lorem ipsum dolor sit amed"
   }
 }
 
 ```
 
+## Features
+
+The example above is only the top of the iceberg of possibilities. The `Hydrate` 
+package provides great (and often unique) features, such as:
+* Producing value objects using multiple keys of the result set
+* Lazy (and extra lazy) loading relationships, even if they are modeled as plain 
+arrays!
+* Deciding on a concrete implementation at runtime ("single table inheritance")
+* Complete control over data interpretation by calling a Closure to load the 
+property value.
+* ...and more!
 
 ## Subpackages
 The `Hydrate` package contains no source code (save some integration tests)
