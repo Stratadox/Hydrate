@@ -1,0 +1,37 @@
+{
+  "books": [
+    {
+      "id": "9781493634149",
+      "title": "Fruit Infused Water: 50 Quick & Easy Recipes for Delicious & Healthy Hydration",
+      "author": {
+        "firstName": "Elle",
+        "lastName": "Garner"
+      },
+      "chapters": [
+        {
+          "title": "Chapter 1",
+          "elements": [
+            {
+              "type": "text",
+              "text": "Content not available:"
+            },
+            {
+              "type": "text",
+              "text": "Purchase book for actual content..."
+            }
+          ]
+        },
+        {
+          "title": "Chapter 1",
+          "elements": [
+            {
+              "type": "text",
+              "text": "Purchase book for actual content of chapter 2..."
+            }
+          ]
+        }
+      ],
+      "format": "%s (by %s, ISBN %s)\n\n%s"
+    }
+  ]
+}
