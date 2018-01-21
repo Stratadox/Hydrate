@@ -5,7 +5,6 @@ declare(strict_types = 1);
 namespace Stratadox\Hydrate\Test\Infrastructure\Loaders;
 
 use SQLite3;
-use Stratadox\Hydrate\Test\Infrastructure\Loaders\TitleLoader;
 use Stratadox\Hydrate\Test\Model\Book;
 use Stratadox\Hydrate\Test\Model\Title;
 use Stratadox\Hydration\Hydrates;
