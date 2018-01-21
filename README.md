@@ -40,8 +40,9 @@ while ($data = $result->row) {
 }
 ```
 
-3. All done! Your books are now hydrated as fully fledged object graphs, each 
-containing their related objects, like a Title, an Isbn and an Author.
+3. All done! Your objects, in this case a bunch of books, are now hydrated as 
+fully fledged object graphs, each containing their related objects, like a 
+Title, an Isbn and an Author.
 
 
 ## Installation
