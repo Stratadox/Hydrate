@@ -11,6 +11,9 @@ use Stratadox\Hydrate\Test\Model\Author;
 use Stratadox\Hydrate\Test\Model\Book;
 use Stratadox\Hydrate\Test\Model\Chapter;
 use Stratadox\Hydrate\Test\Model\Chapters;
+use Stratadox\Hydrate\Test\Model\Element;
+use Stratadox\Hydrate\Test\Model\Elements;
+use Stratadox\Hydrate\Test\Model\Image;
 use Stratadox\Hydrate\Test\Model\Isbn;
 use Stratadox\Hydrate\Test\Model\Text;
 use Stratadox\Hydrate\Test\Model\Title;
@@ -18,6 +21,7 @@ use Stratadox\Hydration\Hydrates;
 use Stratadox\Hydration\Mapper\Instruction\Call;
 use Stratadox\Hydration\Mapper\Instruction\Has;
 use Stratadox\Hydration\Mapper\Instruction\In;
+use Stratadox\Hydration\Mapper\Instruction\Relation\Choose;
 use Stratadox\Hydration\Mapper\Mapper;
 
 class Hydrating_a_json_document extends TestCase
@@ -48,6 +52,10 @@ class Hydrating_a_json_document extends TestCase
             'Purchase book for actual content of chapter 2...',
             (string) $books[0]->chapters()[1]->text()
         );
+        $this->assertSame(
+            'Graphic #1',
+            (string) $books[0]->chapters()[1]->elements()[1]
+        );
     }
 
     protected function setUp()
@@ -69,9 +77,18 @@ class Hydrating_a_json_document extends TestCase
                 Has::many(Chapter::class, In::key('chapters'))
                     ->containedInA(Chapters::class)
                     ->nested()
-                    ->with('elements', Has::many(Text::class)
+                    ->with('elements', Has::many(Element::class)
+                        ->selectBy('type',
+                            [
+                                'text' => Choose::the(Text::class)
+                                    ->with('text'),
+                                'image' => Choose::the(Image::class)
+                                    ->with('src')
+                                    ->with('alt'),
+                            ]
+                        )
                         ->nested()
-                        ->with('text')
+                        ->containedInA(Elements::class)
                     )
             )
             ->property('format')

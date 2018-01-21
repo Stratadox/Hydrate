@@ -14,11 +14,11 @@
     },
     "require": {
         "php": ">=7.1",
-        "stratadox/hydration": "^1.6",
-        "stratadox/hydrator": "^1.2",
+        "stratadox/hydration": "^1.8",
+        "stratadox/hydration-mapper": "^1.2",
         "stratadox/hydration-mapping": "^1.4",
         "stratadox/hydration-proxies": "^1.3",
-        "stratadox/hydration-mapper": "^1.1"
+        "stratadox/hydrator": "^1.2"
     },
     "require-dev": {
         "phpunit/phpunit": "^6.5",

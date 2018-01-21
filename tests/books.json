@@ -27,6 +27,11 @@
             {
               "type": "text",
               "text": "Purchase book for actual content of chapter 2..."
+            },
+            {
+              "type": "image",
+              "src": "picture.png",
+              "alt": "Graphic #1"
             }
           ]
         }
