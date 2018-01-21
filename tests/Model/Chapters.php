@@ -9,7 +9,7 @@ use Stratadox\Collection\Alterable;
 use Stratadox\ImmutableCollection\Altering;
 use Stratadox\ImmutableCollection\ImmutableCollection;
 
-class Contents extends ImmutableCollection implements Alterable
+class Chapters extends ImmutableCollection implements Alterable
 {
     use Altering;
 
@@ -36,5 +36,10 @@ class Contents extends ImmutableCollection implements Alterable
     public function __toString() : string
     {
         return implode("\n\n", $this->toArray());
+    }
+
+    public function current() : Chapter
+    {
+        return parent::current();
     }
 }

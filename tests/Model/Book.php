@@ -19,7 +19,7 @@ class Book
         Title $ofTheBook,
         Author $whoWroteIt,
         Isbn $code,
-        Contents $inTheBook,
+        Chapters $inTheBook,
         string $format = null
     ) {
         $this->title = $ofTheBook;
@@ -64,7 +64,7 @@ class Book
         return $this->isbn;
     }
 
-    public function contents() : Contents
+    public function chapters() : Chapters
     {
         return $this->contents;
     }
@@ -85,7 +85,7 @@ class Book
             $this->title(),
             $this->author(),
             $this->isbn(),
-            $this->contents()
+            $this->chapters()
         );
     }
 }

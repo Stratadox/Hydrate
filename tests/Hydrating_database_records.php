@@ -2,16 +2,19 @@
 
 declare(strict_types = 1);
 
-namespace Stratadox\Hydrate;
+namespace Stratadox\Hydrate\Test;
 
 use PHPUnit\Framework\TestCase;
 use SQLite3;
 use Stratadox\Hydrate\Test\Infrastructure\Loaders\ChapterLoaderFactory;
+use Stratadox\Hydrate\Test\Model\Chapter;
 use Stratadox\Hydrate\Test\Model\ChapterProxy;
+use Stratadox\Hydrate\Test\Model\Elements;
+use Stratadox\Hydrate\Test\Model\Text;
 use Stratadox\Hydration\Hydrates;
 use Stratadox\Hydrate\Test\Model\Author;
 use Stratadox\Hydrate\Test\Model\Book;
-use Stratadox\Hydrate\Test\Model\Contents;
+use Stratadox\Hydrate\Test\Model\Chapters;
 use Stratadox\Hydrate\Test\Model\Isbn;
 use Stratadox\Hydrate\Test\Model\Title;
 use Stratadox\Hydration\Hydrator\MappedHydrator;
@@ -25,8 +28,6 @@ use Stratadox\Hydration\Mapper\Mapper;
  */
 class Hydrating_database_records extends TestCase
 {
-    const DATABASE_FILE = 'tests/books.sqlite';
-
     /** @var SQLite3 */
     private $database;
 
@@ -49,7 +50,7 @@ class Hydrating_database_records extends TestCase
             $this->assertInstanceOf(Isbn::class, $book->isbn());
             $this->assertInstanceOf(Title::class, $book->title());
             $this->assertInstanceOf(Author::class, $book->author());
-            $this->assertInstanceOf(Contents::class, $book->contents());
+            $this->assertInstanceOf(Chapters::class, $book->chapters());
         }
     }
 
@@ -143,7 +144,7 @@ class Hydrating_database_records extends TestCase
 
     private function setUpDatabase() : SQLite3
     {
-        $database = new SQLite3('../books.sqlite');
+        $database = new SQLite3(__DIR__.'/books.sqlite');
         foreach (require('Infrastructure/Database.php') as $statement) {
             $database->exec($statement);
         }
@@ -165,8 +166,17 @@ class Hydrating_database_records extends TestCase
                 ->with('lastName', In::key('author_last_name'))
             )
             ->property('contents', Has::many(ChapterProxy::class, In::key('chapters'))
-                ->containedInA(Contents::class)
-                ->loadedBy(ChapterLoaderFactory::withAccessTo($database))
+                ->containedInA(Chapters::class)
+                ->loadedBy(ChapterLoaderFactory::withAccessTo($database,
+                    Mapper::forThe(Chapter::class)
+                        ->property('title')
+                        ->property('elements', Has::many(Text::class)
+                            ->with('text')
+                            ->nested()
+                            ->containedInA(Elements::class)
+                        )
+                        ->hydrator()
+                ))
             )
             ->property('format')
             ->map();

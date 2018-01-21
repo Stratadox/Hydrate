@@ -4,22 +4,20 @@ declare(strict_types = 1);
 
 namespace Stratadox\Hydrate\Test\Model;
 
-use function implode;
-use Stratadox\ImmutableCollection\ImmutableCollection;
-
-class Chapter extends ImmutableCollection
+class Chapter
 {
     private $title;
+    private $elements;
 
-    public function __construct(Title $title, Element ...$elements)
+    public function __construct(Title $title, Elements $elements)
     {
         $this->title = $title;
-        parent::__construct(...$elements);
+        $this->elements = $elements;
     }
 
     public static function titled(string $title, Element ...$elements) : Chapter
     {
-        return new static(new Title($title), ...$elements);
+        return new static(new Title($title), new Elements(...$elements));
     }
 
     public function title() : Title
@@ -27,11 +25,16 @@ class Chapter extends ImmutableCollection
         return $this->title;
     }
 
+    public function elements() : Elements
+    {
+        return $this->elements;
+    }
+
     public function text() : Text
     {
         $text = Text::startEmpty();
         $separator = '';
-        foreach ($this as $element) {
+        foreach ($this->elements as $element) {
             if ($element instanceof Text) {
                 $text = $text->add($element, $separator);
                 $separator = PHP_EOL;
@@ -42,6 +45,6 @@ class Chapter extends ImmutableCollection
 
     public function __toString() : string
     {
-        return "{$this->title()}\n\n" . implode("\n\n", $this->toArray());
+        return "{$this->title()}\n\n{$this->text()}";
     }
 }
