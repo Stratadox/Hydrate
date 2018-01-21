@@ -6,12 +6,19 @@ namespace Stratadox\Hydrate;
 
 use PHPUnit\Framework\TestCase;
 use SQLite3;
+use Stratadox\Hydrate\Test\Infrastructure\Loaders\ChapterLoaderFactory;
+use Stratadox\Hydrate\Test\Model\ChapterProxy;
 use Stratadox\Hydration\Hydrates;
 use Stratadox\Hydrate\Test\Model\Author;
 use Stratadox\Hydrate\Test\Model\Book;
 use Stratadox\Hydrate\Test\Model\Contents;
 use Stratadox\Hydrate\Test\Model\Isbn;
 use Stratadox\Hydrate\Test\Model\Title;
+use Stratadox\Hydration\Hydrator\MappedHydrator;
+use Stratadox\Hydration\Mapper\Instruction\Call;
+use Stratadox\Hydration\Mapper\Instruction\Has;
+use Stratadox\Hydration\Mapper\Instruction\In;
+use Stratadox\Hydration\Mapper\Mapper;
 
 /**
  * @coversNothing
@@ -23,7 +30,7 @@ class Hydrating_database_records extends TestCase
     /** @var SQLite3 */
     private $database;
 
-    /** @var  Hydrates */
+    /** @var Hydrates */
     private $books;
 
     /** @scenario */
@@ -56,7 +63,10 @@ class Hydrating_database_records extends TestCase
             $book->author()
         );
         $this->assertEquals(
-            new Title('Fruit Infused Water: 50 Quick & Easy Recipes for Delicious & Healthy Hydration'),
+            new Title(
+                'Fruit Infused Water: 50 Quick & Easy Recipes for Delicious & ' .
+                'Healthy Hydration'
+            ),
             $book->title()
         );
         $this->assertEquals(
@@ -105,12 +115,13 @@ class Hydrating_database_records extends TestCase
         $this->assertTrue($book->hasIsbnVersion13());
     }
 
+
     private function bookByIsbn($code) : Book
     {
         return $this->books->fromArray($this->selectBookDataByIsbn($code));
     }
 
-    private function selectBookDataByIsbn(string $isbn)
+    private function selectBookDataByIsbn(string $isbn) : array
     {
         $query = $this->database->prepare(
             "SELECT * FROM `book` WHERE `id` = :isbn"
@@ -119,7 +130,7 @@ class Hydrating_database_records extends TestCase
         return $query->execute()->fetchArray(SQLITE3_ASSOC);
     }
 
-    private function insertTextIntoTheDatabase(string $text)
+    private function insertTextIntoTheDatabase(string $text) : void
     {
         $query = $this->database->prepare(
             "INSERT INTO `text` VALUES (
@@ -130,10 +141,42 @@ class Hydrating_database_records extends TestCase
         $query->execute();
     }
 
+    private function setUpDatabase() : SQLite3
+    {
+        $database = new SQLite3('../books.sqlite');
+        foreach (require('Infrastructure/Database.php') as $statement) {
+            $database->exec($statement);
+        }
+        return $database;
+    }
+
+    private function buildBookMapping(SQLite3 $database)
+    {
+        return Mapper::forThe(Book::class)
+            ->property('title', Has::one(Title::class)->with('title'))
+            ->property('isbn', Has::one(Isbn::class)
+                ->with('code', In::key('id'))
+                ->with('version', Call::the(function ($data) {
+                    return strlen($data['id']);
+                }))
+            )
+            ->property('author', Has::one(Author::class)
+                ->with('firstName', In::key('author_first_name'))
+                ->with('lastName', In::key('author_last_name'))
+            )
+            ->property('contents', Has::many(ChapterProxy::class, In::key('chapters'))
+                ->containedInA(Contents::class)
+                ->loadedBy(ChapterLoaderFactory::withAccessTo($database))
+            )
+            ->property('format')
+            ->map();
+    }
+
     protected function setUp() : void
     {
-        $dependencies = require 'Infrastructure/DependencyContainer.php';
-        $this->database = $dependencies->get('database');
-        $this->books = $dependencies->get('books');
+        $this->database = $this->setUpDatabase();
+        $this->books = MappedHydrator::fromThis(
+            $this->buildBookMapping($this->database)
+        );
     }
 }

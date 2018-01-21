@@ -22,7 +22,6 @@
     },
     "require-dev": {
         "phpunit/phpunit": "^6.5",
-        "rpkamp/fancy-testdox-printer": "^0.2.5",
-        "stratadox/di": "^1.0"
+        "rpkamp/fancy-testdox-printer": "^0.2.5"
     }
 }
