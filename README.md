@@ -2,29 +2,30 @@
 
 [![Build Status](https://travis-ci.org/Stratadox/Hydrate.svg?branch=master)](https://travis-ci.org/Stratadox/Hydrate)
 
-The Hydrate module contains all that is needed to hydrate objects from an array
+The `Hydrate` module contains all that is needed to hydrate objects from an array
 of data. This data could come from a sql database, a document store, a web API 
 or any other source.
 
-## Usage
+## Installation
 
-1. Create a hydrator that knows how to map your model to the data source:
+Install using composer:
+
+`composer require stratadox/hydrate`
+
+## Basic Usage
+
+1. Use the Mapper to create a hydrator that can can build your domain model from
+the input data:
 
 ```php
 $hydrator = Mapper::forThe(Book::class)
    ->property('title', Has::one(Title::class)->with('title'))
-   ->property('isbn', Has::one(Isbn::class)
-       ->with('code', In::key('id'))
-       ->with('version', Call::the(function ($data) {
-           return strlen($data['id']);
-       }))
-   )
+   ->property('isbn', Has::one(Isbn::class)->with('code', In::key('id'))
    ->property('author', Has::one(Author::class)
        ->with('firstName', In::key('author_first_name'))
        ->with('lastName', In::key('author_last_name'))
    )
    ->property('contents')
-   ->property('format')
    ->hydrator();
 ```
 
@@ -41,15 +42,70 @@ while ($data = $result->row) {
 fully fledged object graphs, each containing their related objects, like a 
 Title, an Isbn and an Author.
 
+In fact, the object graph for the above mapping would transform a query result 
+like this:
+```
++------------+---------------+-------------------+------------------+----------------------------+
+| id         | title         | author_first_name | author_last_name | contents                   |
++------------+---------------+-------------------+------------------+----------------------------+
+| 1234567890 | Book Title    | John              | Doe              | Lorem ipsum dolor sit amed |
+| 9876543210 | Foo, bar, baz | Jackie            | Chan             | Lorem ipsum dolor sit amed |
++------------+---------------+-------------------+------------------+----------------------------+
+```
 
-## Installation
+```
+array(2) {
+  [0]=>
+  object(Book)#1 (4) {
+    ["title"]=>
+    object(Title)#2 (1) {
+      ["title"]=>
+      string(10) "Book Title"
+    }
+    ["isbn"]=>
+    object(Isbn)#3 (1) {
+      ["code"]=>
+      string(10) "1234567890"
+    }
+    ["author"]=>
+    object(Author)#4 (2) {
+      ["firstName"]=>
+      string(4) "John"
+      ["lastName"]=>
+      string(3) "Doe"
+    }
+    ["contents"]=>
+    string(26) "Lorem ipsum dolor sit amed"
+  }
+  [1]=>
+  object(Book)#1 (4) {
+    ["title"]=>
+    object(Title)#2 (1) {
+      ["title"]=>
+      string(10) "Foo, bar, baz"
+    }
+    ["isbn"]=>
+    object(Isbn)#3 (1) {
+      ["code"]=>
+      string(10) "9876543210"
+    }
+    ["author"]=>
+    object(Author)#4 (2) {
+      ["firstName"]=>
+      string(4) "Jackie"
+      ["lastName"]=>
+      string(3) "Chan"
+    }
+    ["contents"]=>
+    string(26) "Lorem ipsum dolor sit amed"
+  }
+}
 
-Install using composer:
+```
 
-`composer require stratadox/hydrate`
 
 ## Subpackages
-The Hydrate package contains no source code (save some integration tests)
+The `Hydrate` package contains no source code (save some integration tests)
 Instead it composes several sub-packages. These packages are listed below.
 
 ### Hydrator
