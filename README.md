@@ -23,10 +23,7 @@ $hydrator = Mapper::forThe(Book::class)
        ->with('firstName', In::key('author_first_name'))
        ->with('lastName', In::key('author_last_name'))
    )
-   ->property('contents', Has::many(ChapterProxy::class, In::key('chapters'))
-       ->containedInA(Contents::class)
-       ->loadedBy(ChapterLoaderFactory::withAccessTo($database))
-   )
+   ->property('contents')
    ->property('format')
    ->hydrator();
 ```
