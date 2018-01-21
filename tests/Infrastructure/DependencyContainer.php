@@ -14,20 +14,16 @@ use Stratadox\Hydrate\Test\Model\Contents;
 use Stratadox\Hydrate\Test\Model\Isbn;
 use Stratadox\Hydrate\Test\Model\Title;
 use Stratadox\Hydration\Hydrator\MappedHydrator;
-use Stratadox\Hydration\Hydrator\SimpleHydrator;
-use Stratadox\Hydration\Hydrator\VariadicConstructor;
-use Stratadox\Hydration\Mapping\Mapping;
-use Stratadox\Hydration\Mapping\Property\Dynamic\ClosureResult;
-use Stratadox\Hydration\Mapping\Property\Relationship\HasManyProxies;
-use Stratadox\Hydration\Mapping\Property\Relationship\HasOneEmbedded;
-use Stratadox\Hydration\Mapping\Property\Scalar\StringValue;
-use Stratadox\Hydration\Proxying\AlterableCollectionEntryUpdaterFactory;
-use Stratadox\Hydration\Proxying\ProxyFactory;
+use Stratadox\Hydration\Mapper\Instruction\Call;
+use Stratadox\Hydration\Mapper\Instruction\Has;
+use Stratadox\Hydration\Mapper\Instruction\In;
+use Stratadox\Hydration\Mapper\Mapper;
 use function strlen;
 
 $container = new Container;
 
-$container->set('database', function () use ($container) {
+$container->set('database', function () use ($container)
+{
     $database = new SQLite3('../books.sqlite');
     foreach (require('Database.php') as $statement) {
         $database->exec($statement);
@@ -35,47 +31,31 @@ $container->set('database', function () use ($container) {
     return $database;
 });
 
-$container->set('books', function () use ($container) {
-    return MappedHydrator::fromThis(Mapping::ofThe(Book::class,
-        HasOneEmbedded::inProperty('title', $container->get('title')),
-        HasOneEmbedded::inProperty('isbn', $container->get('isbn')),
-        HasOneEmbedded::inProperty('author', $container->get('author')),
-        HasManyProxies::inPropertyWithDifferentKey('contents', 'chapters',
-            VariadicConstructor::forThe(Contents::class),
-            $container->get('chapterProxies')
-        ),
-        StringValue::inProperty('format')
-    ));
+$container->set('books', function () use ($container)
+{
+    return MappedHydrator::fromThis($container->get('books.mapping'));
 });
 
-$container->set('title', function () {
-    return MappedHydrator::fromThis(Mapping::ofThe(Title::class,
-        StringValue::inProperty('title')
-    ));
-});
-
-$container->set('isbn', function () {
-    return MappedHydrator::fromThis(Mapping::ofThe(Isbn::class,
-        StringValue::inPropertyWithDifferentKey('code', 'id'),
-        ClosureResult::inProperty('version', function (array $data) {
-            return strlen($data['id']);
-        })
-    ));
-});
-
-$container->set('author', function () {
-    return MappedHydrator::fromThis(Mapping::ofThe(Author::class,
-        StringValue::inPropertyWithDifferentKey('firstName', 'author_first_name'),
-        StringValue::inPropertyWithDifferentKey('lastName', 'author_last_name')
-    ));
-});
-
-$container->set('chapterProxies', function () use ($container) {
-    return ProxyFactory::fromThis(
-        SimpleHydrator::forThe(ChapterProxy::class),
-        ChapterLoaderFactory::withAccessTo($container->get('database')),
-        new AlterableCollectionEntryUpdaterFactory
-    );
+$container->set('books.mapping', function () use ($container)
+{
+    return Mapper::forThe(Book::class)
+        ->property('title', Has::one(Title::class)->with('title'))
+        ->property('isbn', Has::one(Isbn::class)
+            ->with('code', In::key('id'))
+            ->with('version', Call::the(function ($data) {
+                return strlen($data['id']);
+            }))
+        )
+        ->property('author', Has::one(Author::class)
+            ->with('firstName', In::key('author_first_name'))
+            ->with('lastName', In::key('author_last_name'))
+        )
+        ->property('contents', Has::many(ChapterProxy::class, In::key('chapters'))
+            ->containedInA(Contents::class)
+            ->loadedBy(ChapterLoaderFactory::withAccessTo($container->get('database')))
+        )
+        ->property('format')
+        ->map();
 });
 
 return $container;

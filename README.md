@@ -40,6 +40,14 @@ Lazy loading through proxy objects.
 [![Coverage Status](https://coveralls.io/repos/github/Stratadox/HydrationProxies/badge.svg?branch=master)](https://coveralls.io/github/Stratadox/HydrationProxies?branch=master)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Stratadox/HydrationProxies/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Stratadox/HydrationProxies/?branch=master)
 
+### Hydration mapper
+Mapping builder for easier domain mapping.
+
+[![Source Code](https://img.shields.io/badge/source-github-brightgreen.svg)](https://github.com/Stratadox/HydrationMapper)
+[![Build Status](https://travis-ci.org/Stratadox/HydrationMapper.svg?branch=master)](https://travis-ci.org/Stratadox/HydrationMapper)
+[![Coverage Status](https://coveralls.io/repos/github/Stratadox/HydrationMapper/badge.svg?branch=master)](https://coveralls.io/github/Stratadox/HydrationMapper?branch=master)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Stratadox/HydrationMapper/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Stratadox/HydrationMapper/?branch=master)
+
 ### Hydration 
 Interfaces for the above subpackages.
 
