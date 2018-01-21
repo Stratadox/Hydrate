@@ -6,6 +6,44 @@ The Hydrate module contains all that is needed to hydrate objects from an array
 of data. This data could come from a sql database, a document store, a web API 
 or any other source.
 
+## Usage
+
+1. Create a hydrator that knows how to map your model to the data source:
+
+```php
+$hydrator = Mapper::forThe(Book::class)
+   ->property('title', Has::one(Title::class)->with('title'))
+   ->property('isbn', Has::one(Isbn::class)
+       ->with('code', In::key('id'))
+       ->with('version', Call::the(function ($data) {
+           return strlen($data['id']);
+       }))
+   )
+   ->property('author', Has::one(Author::class)
+       ->with('firstName', In::key('author_first_name'))
+       ->with('lastName', In::key('author_last_name'))
+   )
+   ->property('contents', Has::many(ChapterProxy::class, In::key('chapters'))
+       ->containedInA(Contents::class)
+       ->loadedBy(ChapterLoaderFactory::withAccessTo($database))
+   )
+   ->property('format')
+   ->hydrator();
+```
+
+2. Load the data from the data source:
+```php
+$books = [];
+$result = $database->query("SELECT * FROM `book`");
+while ($data = $result->row) {
+    $books[] = $hydrator->fromArray($data);
+}
+```
+
+3. All done! Your books are now hydrated as fully fledged object graphs, each 
+containing their related objects, like a Title, an Isbn and an Author.
+
+
 ## Installation
 
 Install using composer:
@@ -52,13 +90,3 @@ Mapping builder for easier domain mapping.
 Interfaces for the above subpackages.
 
 [![Source Code](https://img.shields.io/badge/source-github-brightgreen.svg)](https://github.com/Stratadox/Hydration)
-
-## Integration tests
-This package contains tests that assert the packages work well together.
-
-These tests do not generate code coverage; the code coverage statistics shown 
-above are for solely for the unit tests.
-
-### Hydrate database records
-This class of tests asserts that (sqlite) database records get converted to an
-object graph, lazily loading some of the objects.
