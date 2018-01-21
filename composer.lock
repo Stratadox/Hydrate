@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "02c2e8358b55dff0b21a579ff217a344",
+    "content-hash": "754009488e60639b9e63fc5f55cd75c4",
     "packages": [
         {
             "name": "stratadox/collection-contracts",
@@ -45,16 +45,16 @@
         },
         {
             "name": "stratadox/hydration",
-            "version": "v1.5",
+            "version": "v1.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Stratadox/Hydration.git",
-                "reference": "a19b13e3493224bf587a5895f1988dc26ede8b5b"
+                "reference": "32534656962a9d6a0bbf21c5e972cc200a55ee43"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Stratadox/Hydration/zipball/a19b13e3493224bf587a5895f1988dc26ede8b5b",
-                "reference": "a19b13e3493224bf587a5895f1988dc26ede8b5b",
+                "url": "https://api.github.com/repos/Stratadox/Hydration/zipball/32534656962a9d6a0bbf21c5e972cc200a55ee43",
+                "reference": "32534656962a9d6a0bbf21c5e972cc200a55ee43",
                 "shasum": ""
             },
             "require": {
@@ -76,20 +76,20 @@
                     "homepage": "http://www.stratadox.com/"
                 }
             ],
-            "time": "2018-01-21T13:38:30+00:00"
+            "time": "2018-01-21T14:46:11+00:00"
         },
         {
             "name": "stratadox/hydration-mapper",
-            "version": "v1",
+            "version": "v1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Stratadox/HydrationMapper.git",
-                "reference": "ab544701526dd0cfd7a7ba7e9bfec025040a2ba3"
+                "reference": "1cc941b276207fc8d23dc2a3782fedd29b2d6b67"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Stratadox/HydrationMapper/zipball/ab544701526dd0cfd7a7ba7e9bfec025040a2ba3",
-                "reference": "ab544701526dd0cfd7a7ba7e9bfec025040a2ba3",
+                "url": "https://api.github.com/repos/Stratadox/HydrationMapper/zipball/1cc941b276207fc8d23dc2a3782fedd29b2d6b67",
+                "reference": "1cc941b276207fc8d23dc2a3782fedd29b2d6b67",
                 "shasum": ""
             },
             "require": {
@@ -120,31 +120,31 @@
                     "homepage": "http://www.stratadox.com/"
                 }
             ],
-            "time": "2018-01-21T14:07:52+00:00"
+            "time": "2018-01-21T14:48:44+00:00"
         },
         {
             "name": "stratadox/hydration-mapping",
-            "version": "v1.4",
+            "version": "v1.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Stratadox/HydrationMapping.git",
-                "reference": "dd973111d7271d2b1aed44fde169ad9e9fef03f2"
+                "reference": "d8ac6c99fb7da9b8dc8253019d4e7168835f19f8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Stratadox/HydrationMapping/zipball/dd973111d7271d2b1aed44fde169ad9e9fef03f2",
-                "reference": "dd973111d7271d2b1aed44fde169ad9e9fef03f2",
+                "url": "https://api.github.com/repos/Stratadox/HydrationMapping/zipball/d8ac6c99fb7da9b8dc8253019d4e7168835f19f8",
+                "reference": "d8ac6c99fb7da9b8dc8253019d4e7168835f19f8",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.1",
-                "stratadox/hydration": "^1.4",
+                "stratadox/hydration": "^1.6",
                 "stratadox/immutable-collection": "^1.0"
             },
             "require-dev": {
                 "phpunit/phpunit": "^6.5",
-                "rpkamp/fancy-testdox-printer": "^0.1.1",
-                "satooshi/php-coveralls": "^1.0"
+                "rpkamp/fancy-testdox-printer": "^0.2.5",
+                "satooshi/php-coveralls": "^2.0"
             },
             "type": "library",
             "autoload": {
@@ -162,32 +162,32 @@
                     "homepage": "http://www.stratadox.com/"
                 }
             ],
-            "time": "2018-01-21T10:33:35+00:00"
+            "time": "2018-01-21T16:10:35+00:00"
         },
         {
             "name": "stratadox/hydration-proxies",
-            "version": "v1.3",
+            "version": "v1.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Stratadox/HydrationProxies.git",
-                "reference": "c670dcf0db39119405b8e54ea6722b37b7d384b3"
+                "reference": "c4e34040521a05f557d2917952d33b2ff4805e61"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Stratadox/HydrationProxies/zipball/c670dcf0db39119405b8e54ea6722b37b7d384b3",
-                "reference": "c670dcf0db39119405b8e54ea6722b37b7d384b3",
+                "url": "https://api.github.com/repos/Stratadox/HydrationProxies/zipball/c4e34040521a05f557d2917952d33b2ff4805e61",
+                "reference": "c4e34040521a05f557d2917952d33b2ff4805e61",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.1",
-                "stratadox/collection-contracts": ">=1.0",
-                "stratadox/hydration": ">=1.3"
+                "stratadox/collection-contracts": "^1.0",
+                "stratadox/hydration": "^1.6"
             },
             "require-dev": {
-                "phpunit/phpunit": ">=6.3",
-                "rpkamp/fancy-testdox-printer": "^0.1.1",
-                "satooshi/php-coveralls": "^1.0",
-                "stratadox/hydrator": "^1.0",
+                "phpunit/phpunit": "^6.5",
+                "rpkamp/fancy-testdox-printer": "^0.2.5",
+                "satooshi/php-coveralls": "^2.0",
+                "stratadox/hydrator": "^1.2",
                 "stratadox/immutable-collection": "^1.0"
             },
             "type": "library",
@@ -206,7 +206,7 @@
                     "homepage": "http://www.stratadox.com/"
                 }
             ],
-            "time": "2017-11-26T14:19:43+00:00"
+            "time": "2018-01-21T16:22:12+00:00"
         },
         {
             "name": "stratadox/hydrator",
@@ -1162,55 +1162,6 @@
             "time": "2018-01-06T05:45:45+00:00"
         },
         {
-            "name": "psr/container",
-            "version": "1.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/php-fig/container.git",
-                "reference": "b7ce3b176482dbbc1245ebf52b181af44c2cf55f"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/container/zipball/b7ce3b176482dbbc1245ebf52b181af44c2cf55f",
-                "reference": "b7ce3b176482dbbc1245ebf52b181af44c2cf55f",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Psr\\Container\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "PHP-FIG",
-                    "homepage": "http://www.php-fig.org/"
-                }
-            ],
-            "description": "Common Container Interface (PHP FIG PSR-11)",
-            "homepage": "https://github.com/php-fig/container",
-            "keywords": [
-                "PSR-11",
-                "container",
-                "container-interface",
-                "container-interop",
-                "psr"
-            ],
-            "time": "2017-02-14T16:28:37+00:00"
-        },
-        {
             "name": "rpkamp/fancy-testdox-printer",
             "version": "0.2.5",
             "source": {
@@ -1813,59 +1764,6 @@
             "description": "Library that helps with managing the version number of Git-hosted PHP projects",
             "homepage": "https://github.com/sebastianbergmann/version",
             "time": "2016-10-03T07:35:21+00:00"
-        },
-        {
-            "name": "stratadox/di",
-            "version": "v1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Stratadox/Di.git",
-                "reference": "d59f78f9c7ac4342c585bdf399bd54a671c987f2"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Stratadox/Di/zipball/d59f78f9c7ac4342c585bdf399bd54a671c987f2",
-                "reference": "d59f78f9c7ac4342c585bdf399bd54a671c987f2",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.0",
-                "psr/container": "^1.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^5.6",
-                "satooshi/php-coveralls": "^1.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Stratadox\\Di\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Stratadox",
-                    "homepage": "http://www.stratadox.com/"
-                }
-            ],
-            "description": "A most simplistic Dependency Injection Container",
-            "keywords": [
-                "Simple",
-                "container",
-                "dependency",
-                "di",
-                "dic",
-                "injection",
-                "inversion",
-                "lightweight",
-                "small",
-                "stratadox"
-            ],
-            "time": "2017-07-01T14:37:50+00:00"
         },
         {
             "name": "theseer/tokenizer",
