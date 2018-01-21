@@ -69,6 +69,11 @@ class Book
         return $this->contents;
     }
 
+    public function chapter(int $index) : Chapter
+    {
+        return $this->contents[$index];
+    }
+
     public function format() : string
     {
         return $this->format;

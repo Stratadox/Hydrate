@@ -42,11 +42,15 @@ class ChapterLoader extends Loader
     private function elementsInThe(Book $toRead, int $chapter) : array
     {
         $query = $this->database->prepare(
-            'SELECT `text`.`contents` as `text`
-            FROM `content` JOIN `text` ON (
-              `content`.`chapter_id` = `text`.`chapter_id` AND 
-              `content`.`book_id` = :book AND 
-              `content`.`chapter_number` = :chapter
+            'SELECT 
+              element.type as type, 
+              element.text as text, 
+              element.src as src, 
+              element.alt as alt 
+            FROM content JOIN element ON (
+              content.chapter_id = element.chapter_id AND 
+              content.book_id = :book AND 
+              content.chapter_number = :chapter
             );'
         );
         $query->bindValue('book', $toRead->isbn());
@@ -57,11 +61,11 @@ class ChapterLoader extends Loader
     private function titleOfTheBook(Book $toRead, int $chapter) : array
     {
         $query = $this->database->prepare(
-            'SELECT `chapter`.`title` as `title`
-                FROM `content` JOIN `chapter` ON (
-                    `content`.`chapter_id` = `chapter`.`id` AND
-                    `content`.`book_id` = :book AND
-                    `content`.`chapter_number` = :chapter
+            'SELECT chapter.title as title
+                FROM content JOIN chapter ON (
+                    content.chapter_id = chapter.id AND
+                    content.book_id = :book AND
+                    content.chapter_number = :chapter
                 );'
         );
         $query->bindValue('book', $toRead->isbn());

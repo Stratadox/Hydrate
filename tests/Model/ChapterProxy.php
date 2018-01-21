@@ -16,6 +16,11 @@ class ChapterProxy extends Chapter implements Proxy
         return $this->__load()->title();
     }
 
+    public function elements() : Elements
+    {
+        return $this->__load()->elements();
+    }
+
     public function text() : Text
     {
         return $this->__load()->text();

@@ -9,19 +9,22 @@ use SQLite3;
 use Stratadox\Hydrate\Test\Infrastructure\Loaders\ChapterLoaderFactory;
 use Stratadox\Hydrate\Test\Model\Chapter;
 use Stratadox\Hydrate\Test\Model\ChapterProxy;
+use Stratadox\Hydrate\Test\Model\Element;
 use Stratadox\Hydrate\Test\Model\Elements;
+use Stratadox\Hydrate\Test\Model\Image;
 use Stratadox\Hydrate\Test\Model\Text;
-use Stratadox\Hydration\Hydrates;
 use Stratadox\Hydrate\Test\Model\Author;
 use Stratadox\Hydrate\Test\Model\Book;
 use Stratadox\Hydrate\Test\Model\Chapters;
 use Stratadox\Hydrate\Test\Model\Isbn;
 use Stratadox\Hydrate\Test\Model\Title;
-use Stratadox\Hydration\Hydrator\MappedHydrator;
+use Stratadox\Hydration\Hydrates;
 use Stratadox\Hydration\Mapper\Instruction\Call;
 use Stratadox\Hydration\Mapper\Instruction\Has;
 use Stratadox\Hydration\Mapper\Instruction\In;
+use Stratadox\Hydration\Mapper\Instruction\Relation\Choose;
 use Stratadox\Hydration\Mapper\Mapper;
+use Stratadox\Hydration\ProducesProxyLoaders;
 
 /**
  * @coversNothing
@@ -116,6 +119,17 @@ class Hydrating_database_records extends TestCase
         $this->assertTrue($book->hasIsbnVersion13());
     }
 
+    /** @scenario */
+    function choosing_the_class_in_single_table_inheritance()
+    {
+        $book = $this->bookByIsbn('9781493634149');
+
+        $elements = $book->chapter(0)->elements();
+
+        $this->assertInstanceOf(Text::class, $elements[0]);
+        $this->assertInstanceOf(Image::class, $elements[1]);
+    }
+
 
     private function bookByIsbn($code) : Book
     {
@@ -134,8 +148,8 @@ class Hydrating_database_records extends TestCase
     private function insertTextIntoTheDatabase(string $text) : void
     {
         $query = $this->database->prepare(
-            "INSERT INTO `text` VALUES (
-              1, 1, :content
+            "INSERT INTO `element` VALUES (
+              1, 1, 'text', :content, NULL, NULL
             );"
         );
         $query->bindValue('content', $text);
@@ -151,7 +165,7 @@ class Hydrating_database_records extends TestCase
         return $database;
     }
 
-    private function buildBookMapping(SQLite3 $database)
+    private function bookHydratorUsing(SQLite3 $database) : Hydrates
     {
         return Mapper::forThe(Book::class)
             ->property('title', Has::one(Title::class)->with('title'))
@@ -165,28 +179,39 @@ class Hydrating_database_records extends TestCase
                 ->with('firstName', In::key('author_first_name'))
                 ->with('lastName', In::key('author_last_name'))
             )
-            ->property('contents', Has::many(ChapterProxy::class, In::key('chapters'))
-                ->containedInA(Chapters::class)
-                ->loadedBy(ChapterLoaderFactory::withAccessTo($database,
-                    Mapper::forThe(Chapter::class)
-                        ->property('title')
-                        ->property('elements', Has::many(Text::class)
-                            ->with('text')
-                            ->nested()
-                            ->containedInA(Elements::class)
-                        )
-                        ->hydrator()
-                ))
+            ->property(
+                'contents',
+                Has::many(ChapterProxy::class, In::key('chapters'))
+                    ->containedInA(Chapters::class)
+                    ->loadedBy($this->chapterLoader($database))
             )
             ->property('format')
-            ->map();
+            ->hydrator();
+    }
+
+    private function chapterLoader(SQLite3 $database) : ProducesProxyLoaders
+    {
+        return ChapterLoaderFactory::withAccessTo($database,
+            Mapper::forThe(Chapter::class)
+                ->property('title', Has::one(Title::class)->with('title'))
+                ->property('elements',
+                    Has::many(Element::class)->selectBy('type', [
+                        'text' => Choose::the(Text::class)
+                            ->with('text'),
+                        'image' => Choose::the(Image::class)
+                            ->with('src')
+                            ->with('alt'),
+                    ])
+                    ->nested()
+                    ->containedInA(Elements::class)
+                )
+                ->hydrator()
+        );
     }
 
     protected function setUp() : void
     {
         $this->database = $this->setUpDatabase();
-        $this->books = MappedHydrator::fromThis(
-            $this->buildBookMapping($this->database)
-        );
+        $this->books = $this->bookHydratorUsing($this->database);
     }
 }
