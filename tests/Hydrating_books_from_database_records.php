@@ -6,18 +6,18 @@ namespace Stratadox\Hydrate\Test;
 
 use PHPUnit\Framework\TestCase;
 use SQLite3;
-use Stratadox\Hydrate\Test\Infrastructure\Loaders\ChapterLoaderFactory;
-use Stratadox\Hydrate\Test\Model\Chapter;
-use Stratadox\Hydrate\Test\Model\ChapterProxy;
-use Stratadox\Hydrate\Test\Model\Element;
-use Stratadox\Hydrate\Test\Model\Elements;
-use Stratadox\Hydrate\Test\Model\Image;
-use Stratadox\Hydrate\Test\Model\Text;
-use Stratadox\Hydrate\Test\Model\Author;
-use Stratadox\Hydrate\Test\Model\Book;
-use Stratadox\Hydrate\Test\Model\Chapters;
-use Stratadox\Hydrate\Test\Model\Isbn;
-use Stratadox\Hydrate\Test\Model\Title;
+use Stratadox\Hydrate\Test\Book\Chapter;
+use Stratadox\Hydrate\Test\Book\Infrastructure\ChapterProxy;
+use Stratadox\Hydrate\Test\Book\Element;
+use Stratadox\Hydrate\Test\Book\Elements;
+use Stratadox\Hydrate\Test\Book\Image;
+use Stratadox\Hydrate\Test\Book\Infrastructure\ChapterLoaderFactory;
+use Stratadox\Hydrate\Test\Book\Text;
+use Stratadox\Hydrate\Test\Book\Author;
+use Stratadox\Hydrate\Test\Book\Book;
+use Stratadox\Hydrate\Test\Book\Chapters;
+use Stratadox\Hydrate\Test\Book\Isbn;
+use Stratadox\Hydrate\Test\Book\Title;
 use Stratadox\Hydration\Hydrates;
 use Stratadox\Hydration\Mapper\Instruction\Call;
 use Stratadox\Hydration\Mapper\Instruction\Has;
@@ -29,7 +29,7 @@ use Stratadox\Hydration\ProducesProxyLoaders;
 /**
  * @coversNothing
  */
-class Hydrating_database_records extends TestCase
+class Hydrating_books_from_database_records extends TestCase
 {
     /** @var SQLite3 */
     private $database;
@@ -60,7 +60,7 @@ class Hydrating_database_records extends TestCase
     /** @scenario */
     function accessing_data_that_was_not_in_the_original_result_set()
     {
-        $book = $this->bookByIsbn('9781493634149');
+        $book = $this->books->fromArray($this->selectBook('9781493634149'));
 
         $this->assertEquals(
             Author::named('Elle', 'Garner'),
@@ -82,11 +82,11 @@ class Hydrating_database_records extends TestCase
     /** @scenario */
     function changing_database_values_before_lazily_loading_the_data_affects_the_loaded_object()
     {
-        $book = $this->bookByIsbn('9781493634149');
+        $book = $this->books->fromArray($this->selectBook('9781493634149'));
 
         $randomContent = 'Random content: ' . microtime() .' / '. rand();
 
-        $this->insertTextIntoTheDatabase($randomContent);
+        $this->insertText($randomContent);
 
         $this->assertEquals(
             "Purchase book for actual content of chapter 2...\n$randomContent",
@@ -97,13 +97,13 @@ class Hydrating_database_records extends TestCase
     /** @scenario */
     function changing_database_values_after_lazily_loading_the_data_does_not_affect_the_loaded_object()
     {
-        $book = $this->bookByIsbn('9781493634149');
+        $book = $this->books->fromArray($this->selectBook('9781493634149'));
 
         $book->textInChapter(2);
 
         $randomContent = 'Random content: ' . microtime() .' / '. rand();
 
-        $this->insertTextIntoTheDatabase($randomContent);
+        $this->insertText($randomContent);
 
         $this->assertEquals(
             "Purchase book for actual content of chapter 2...",
@@ -114,7 +114,7 @@ class Hydrating_database_records extends TestCase
     /** @scenario */
     function deriving_property_values_from_the_available_data()
     {
-        $book = $this->bookByIsbn('9781493634149');
+        $book = $this->books->fromArray($this->selectBook('9781493634149'));
 
         $this->assertTrue($book->hasIsbnVersion13());
     }
@@ -122,7 +122,7 @@ class Hydrating_database_records extends TestCase
     /** @scenario */
     function choosing_the_class_in_single_table_inheritance()
     {
-        $book = $this->bookByIsbn('9781493634149');
+        $book = $this->books->fromArray($this->selectBook('9781493634149'));
 
         $elements = $book->chapter(0)->elements();
 
@@ -131,12 +131,7 @@ class Hydrating_database_records extends TestCase
     }
 
 
-    private function bookByIsbn($code) : Book
-    {
-        return $this->books->fromArray($this->selectBookDataByIsbn($code));
-    }
-
-    private function selectBookDataByIsbn(string $isbn) : array
+    private function selectBook(string $isbn) : array
     {
         $query = $this->database->prepare(
             "SELECT * FROM `book` WHERE `id` = :isbn"
@@ -145,7 +140,7 @@ class Hydrating_database_records extends TestCase
         return $query->execute()->fetchArray(SQLITE3_ASSOC);
     }
 
-    private function insertTextIntoTheDatabase(string $text) : void
+    private function insertText(string $text) : void
     {
         $query = $this->database->prepare(
             "INSERT INTO `element` VALUES (
@@ -158,8 +153,9 @@ class Hydrating_database_records extends TestCase
 
     private function setUpDatabase() : SQLite3
     {
-        $database = new SQLite3(__DIR__.'/books.sqlite');
-        foreach (require('Infrastructure/Database.php') as $statement) {
+        $database = new SQLite3(__DIR__.'/Book/Data/books.sqlite');
+        $statements = require(__DIR__.'/Book/Infrastructure/Database.php');
+        foreach ($statements as $statement) {
             $database->exec($statement);
         }
         return $database;

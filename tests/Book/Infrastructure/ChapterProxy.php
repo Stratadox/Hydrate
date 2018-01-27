@@ -2,8 +2,12 @@
 
 declare(strict_types = 1);
 
-namespace Stratadox\Hydrate\Test\Model;
+namespace Stratadox\Hydrate\Test\Book\Infrastructure;
 
+use Stratadox\Hydrate\Test\Book\Chapter;
+use Stratadox\Hydrate\Test\Book\Elements;
+use Stratadox\Hydrate\Test\Book\Text;
+use Stratadox\Hydrate\Test\Book\Title;
 use Stratadox\Hydration\Proxy;
 use Stratadox\Hydration\Proxying\Proxying;
 

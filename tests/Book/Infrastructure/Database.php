@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace Stratadox\Hydrate\Test\Infrastructure;
+namespace Stratadox\Hydrate\Test\Book\Infrastructure;
 
 return [
     // Initialise

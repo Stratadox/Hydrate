@@ -2,12 +2,12 @@
 
 declare(strict_types = 1);
 
-namespace Stratadox\Hydrate\Test\Infrastructure\Loaders;
+namespace Stratadox\Hydrate\Test\Book\Infrastructure;
 
 use InvalidArgumentException;
 use SQLite3;
 use SQLite3Result;
-use Stratadox\Hydrate\Test\Model\Book;
+use Stratadox\Hydrate\Test\Book\Book;
 use Stratadox\Hydration\Hydrates;
 use Stratadox\Hydration\Proxying\Loader;
 

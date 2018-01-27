@@ -2,10 +2,10 @@
 
 declare(strict_types = 1);
 
-namespace Stratadox\Hydrate\Test\Infrastructure\Loaders;
+namespace Stratadox\Hydrate\Test\Book\Infrastructure;
 
 use SQLite3;
-use Stratadox\Hydrate\Test\Model\Book;
+use Stratadox\Hydrate\Test\Book\Book;
 use Stratadox\Hydration\Hydrates;
 use Stratadox\Hydration\LoadsProxiedObjects;
 use Stratadox\Hydration\ProducesProxyLoaders;

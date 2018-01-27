@@ -7,16 +7,16 @@ namespace Stratadox\Hydrate\Test;
 use function file_get_contents;
 use function json_decode;
 use PHPUnit\Framework\TestCase;
-use Stratadox\Hydrate\Test\Model\Author;
-use Stratadox\Hydrate\Test\Model\Book;
-use Stratadox\Hydrate\Test\Model\Chapter;
-use Stratadox\Hydrate\Test\Model\Chapters;
-use Stratadox\Hydrate\Test\Model\Element;
-use Stratadox\Hydrate\Test\Model\Elements;
-use Stratadox\Hydrate\Test\Model\Image;
-use Stratadox\Hydrate\Test\Model\Isbn;
-use Stratadox\Hydrate\Test\Model\Text;
-use Stratadox\Hydrate\Test\Model\Title;
+use Stratadox\Hydrate\Test\Book\Author;
+use Stratadox\Hydrate\Test\Book\Book;
+use Stratadox\Hydrate\Test\Book\Chapter;
+use Stratadox\Hydrate\Test\Book\Chapters;
+use Stratadox\Hydrate\Test\Book\Element;
+use Stratadox\Hydrate\Test\Book\Elements;
+use Stratadox\Hydrate\Test\Book\Image;
+use Stratadox\Hydrate\Test\Book\Isbn;
+use Stratadox\Hydrate\Test\Book\Text;
+use Stratadox\Hydrate\Test\Book\Title;
 use Stratadox\Hydration\Hydrates;
 use Stratadox\Hydration\Mapper\Instruction\Call;
 use Stratadox\Hydration\Mapper\Instruction\Has;
@@ -24,7 +24,7 @@ use Stratadox\Hydration\Mapper\Instruction\In;
 use Stratadox\Hydration\Mapper\Instruction\Relation\Choose;
 use Stratadox\Hydration\Mapper\Mapper;
 
-class Hydrating_a_json_document extends TestCase
+class Hydrating_books_from_a_json_document extends TestCase
 {
     /** @var Hydrates */
     private $books;
@@ -32,7 +32,8 @@ class Hydrating_a_json_document extends TestCase
     /** @scenario */
     function hydrating_a_json_string_into_an_object_structure()
     {
-        $result = json_decode(file_get_contents(__DIR__.'/books.json'), true);
+        $json = file_get_contents(__DIR__.'/Book/Data/books.json');
+        $result = json_decode($json, true);
 
         /** @var Book[] $books */
         $books = [];

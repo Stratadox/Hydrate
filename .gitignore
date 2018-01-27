@@ -1,2 +1,2 @@
 /vendor/
-/tests/books.sqlite
+/tests/Book/Data/books.sqlite
