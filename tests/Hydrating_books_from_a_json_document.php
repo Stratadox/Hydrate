@@ -17,12 +17,12 @@ use Stratadox\Hydrate\Test\Book\Image;
 use Stratadox\Hydrate\Test\Book\Isbn;
 use Stratadox\Hydrate\Test\Book\Text;
 use Stratadox\Hydrate\Test\Book\Title;
-use Stratadox\Hydration\Hydrates;
 use Stratadox\Hydration\Mapper\Instruction\Call;
 use Stratadox\Hydration\Mapper\Instruction\Has;
 use Stratadox\Hydration\Mapper\Instruction\In;
 use Stratadox\Hydration\Mapper\Instruction\Relation\Choose;
 use Stratadox\Hydration\Mapper\Mapper;
+use Stratadox\Hydrator\Hydrates;
 
 class Hydrating_books_from_a_json_document extends TestCase
 {
@@ -93,6 +93,6 @@ class Hydrating_books_from_a_json_document extends TestCase
                     )
             )
             ->property('format')
-            ->hydrator();
+            ->finish();
     }
 }

@@ -8,8 +8,8 @@ use Stratadox\Hydrate\Test\Book\Chapter;
 use Stratadox\Hydrate\Test\Book\Elements;
 use Stratadox\Hydrate\Test\Book\Text;
 use Stratadox\Hydrate\Test\Book\Title;
-use Stratadox\Hydration\Proxy;
-use Stratadox\Hydration\Proxying\Proxying;
+use Stratadox\Proxy\Proxy;
+use Stratadox\Proxy\Proxying;
 
 class ChapterProxy extends Chapter implements Proxy
 {

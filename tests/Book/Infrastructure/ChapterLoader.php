@@ -8,8 +8,8 @@ use InvalidArgumentException;
 use SQLite3;
 use SQLite3Result;
 use Stratadox\Hydrate\Test\Book\Book;
-use Stratadox\Hydration\Hydrates;
-use Stratadox\Hydration\Proxying\Loader;
+use Stratadox\Hydrator\Hydrates;
+use Stratadox\Proxy\Loader;
 
 class ChapterLoader extends Loader
 {

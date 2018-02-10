@@ -6,9 +6,9 @@ namespace Stratadox\Hydrate\Test\Book\Infrastructure;
 
 use SQLite3;
 use Stratadox\Hydrate\Test\Book\Book;
-use Stratadox\Hydration\Hydrates;
-use Stratadox\Hydration\LoadsProxiedObjects;
-use Stratadox\Hydration\ProducesProxyLoaders;
+use Stratadox\Hydrator\Hydrates;
+use Stratadox\Proxy\LoadsProxiedObjects;
+use Stratadox\Proxy\ProducesProxyLoaders;
 
 class ChapterLoaderFactory implements ProducesProxyLoaders
 {

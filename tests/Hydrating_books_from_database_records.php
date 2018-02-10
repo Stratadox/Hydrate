@@ -18,13 +18,13 @@ use Stratadox\Hydrate\Test\Book\Book;
 use Stratadox\Hydrate\Test\Book\Chapters;
 use Stratadox\Hydrate\Test\Book\Isbn;
 use Stratadox\Hydrate\Test\Book\Title;
-use Stratadox\Hydration\Hydrates;
 use Stratadox\Hydration\Mapper\Instruction\Call;
 use Stratadox\Hydration\Mapper\Instruction\Has;
 use Stratadox\Hydration\Mapper\Instruction\In;
 use Stratadox\Hydration\Mapper\Instruction\Relation\Choose;
 use Stratadox\Hydration\Mapper\Mapper;
-use Stratadox\Hydration\ProducesProxyLoaders;
+use Stratadox\Hydrator\Hydrates;
+use Stratadox\Proxy\ProducesProxyLoaders;
 
 /**
  * @coversNothing
@@ -182,7 +182,7 @@ class Hydrating_books_from_database_records extends TestCase
                     ->loadedBy($this->chapterLoader($database))
             )
             ->property('format')
-            ->hydrator();
+            ->finish();
     }
 
     private function chapterLoader(SQLite3 $database) : ProducesProxyLoaders
@@ -201,7 +201,7 @@ class Hydrating_books_from_database_records extends TestCase
                     ->nested()
                     ->containedInA(Elements::class)
                 )
-                ->hydrator()
+                ->finish()
         );
     }
 
