@@ -91,8 +91,7 @@ array(2) {
 The example above is only the top of the iceberg of possibilities. The `Hydrate` 
 package provides great (and often unique) features, such as:
 * Producing value objects using multiple keys of the result set
-* Lazy (and extra lazy) loading relationships, even if they are modeled as plain 
-arrays!
+* Lazy (and extra lazy) loading relationships, even if they're in arrays or immutable collections!
 * Deciding on a concrete implementation at runtime ("single table inheritance")
 * Complete control over data interpretation by calling a Closure to load the 
 property value.
