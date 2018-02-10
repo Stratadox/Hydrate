@@ -1,4 +1,4 @@
-#Documentation
+# Documentation
 
 ## Introduction
 
@@ -11,3 +11,5 @@ Install using composer:
 
 `composer require stratadox/hydrate`
 
+## @todo
+Write documentation.
