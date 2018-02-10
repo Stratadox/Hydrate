@@ -42,8 +42,7 @@ while ($data = $result->row) {
 fully fledged object graphs, each containing their related objects, like a 
 Title, an Isbn and an Author.
 
-In fact, the object graph for the above mapping would transform a query result 
-like this:
+In fact, the above mapping would transform a query result like this:
 ```
 +------------+---------------+-------------------+------------------+----------------------------+
 | id         | title         | author_first_name | author_last_name | contents                   |
@@ -97,45 +96,52 @@ arrays!
 * Deciding on a concrete implementation at runtime ("single table inheritance")
 * Complete control over data interpretation by calling a Closure to load the 
 property value.
-* ...and more!
+* [...and more!](documentation/README.md)
 
 ## Subpackages
 The `Hydrate` package contains no source code (save some integration tests)
 Instead it composes several sub-packages. These packages are listed below.
 
 ### Hydrator
-Classes that produce hydrated objects.
+Produces objects, complete with data in their properties, without calling constructor functions.
 
-[![Source Code](https://img.shields.io/badge/source-github-brightgreen.svg)](https://github.com/Stratadox/Hydrator)
+[![Source Code](https://img.shields.io/badge/source-github-blue.svg)](https://github.com/Stratadox/Hydrator)
+[![Implements](https://img.shields.io/badge/interfaces-github-blue.svg)](https://github.com/Stratadox/HydratorContracts)
 [![Build Status](https://travis-ci.org/Stratadox/Hydrator.svg?branch=master)](https://travis-ci.org/Stratadox/Hydrator)
 [![Coverage Status](https://coveralls.io/repos/github/Stratadox/Hydrator/badge.svg?branch=master)](https://coveralls.io/github/Stratadox/Hydrator?branch=master)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Stratadox/Hydrator/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Stratadox/Hydrator/?branch=master)
+[![Latest Stable Version](https://poser.pugx.org/stratadox/hydrator/v/stable)](https://packagist.org/packages/stratadox/hydrator)
+[![License](https://poser.pugx.org/stratadox/hydrator/license)](https://packagist.org/packages/stratadox/hydrator)
 
 ### Hydration mapping
-Tools for mapping data structures to object properties.
+Provides instructions to the hydrators on how to map the input data to the object properties.
 
-[![Source Code](https://img.shields.io/badge/source-github-brightgreen.svg)](https://github.com/Stratadox/HydrationMapping)
+[![Source Code](https://img.shields.io/badge/source-github-blue.svg)](https://github.com/Stratadox/HydrationMapping)
+[![Implements](https://img.shields.io/badge/interfaces-github-blue.svg)](https://github.com/Stratadox/HydrationMappingContracts)
 [![Build Status](https://travis-ci.org/Stratadox/HydrationMapping.svg?branch=master)](https://travis-ci.org/Stratadox/HydrationMapping)
 [![Coverage Status](https://coveralls.io/repos/github/Stratadox/HydrationMapping/badge.svg?branch=master)](https://coveralls.io/github/Stratadox/HydrationMapping?branch=master)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Stratadox/HydrationMapping/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Stratadox/HydrationMapping/?branch=master)
+[![Latest Stable Version](https://poser.pugx.org/stratadox/hydration-mapping/v/stable)](https://packagist.org/packages/stratadox/hydration-mapping)
+[![License](https://poser.pugx.org/stratadox/hydration-mapping/license)](https://packagist.org/packages/stratadox/hydration-mapping)
 
-### Hydration proxies
-Lazy loading through proxy objects.
+### Proxy
+Provides proxy functionality for lazy loading of objects whose data is not loaded into the system yet.
 
-[![Source Code](https://img.shields.io/badge/source-github-brightgreen.svg)](https://github.com/Stratadox/HydrationProxies)
-[![Build Status](https://travis-ci.org/Stratadox/HydrationProxies.svg?branch=master)](https://travis-ci.org/Stratadox/HydrationProxies)
-[![Coverage Status](https://coveralls.io/repos/github/Stratadox/HydrationProxies/badge.svg?branch=master)](https://coveralls.io/github/Stratadox/HydrationProxies?branch=master)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Stratadox/HydrationProxies/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Stratadox/HydrationProxies/?branch=master)
+[![Source Code](https://img.shields.io/badge/source-github-blue.svg)](https://github.com/Stratadox/Proxy)
+[![Implements](https://img.shields.io/badge/interfaces-github-blue.svg)](https://github.com/Stratadox/ProxyContracts)
+[![Build Status](https://travis-ci.org/Stratadox/Proxy.svg?branch=master)](https://travis-ci.org/Stratadox/Proxy)
+[![Coverage Status](https://coveralls.io/repos/github/Stratadox/Proxy/badge.svg?branch=master)](https://coveralls.io/github/Stratadox/Proxy?branch=master)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Stratadox/Proxy/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Stratadox/Proxy/?branch=master)
+[![Latest Stable Version](https://poser.pugx.org/stratadox/proxy/v/stable)](https://packagist.org/packages/stratadox/proxy)
+[![License](https://poser.pugx.org/stratadox/proxy/license)](https://packagist.org/packages/stratadox/proxy)
 
 ### Hydration mapper
-Mapping builder for easier domain mapping.
+Tools to ease the construction of hydration maps.
 
-[![Source Code](https://img.shields.io/badge/source-github-brightgreen.svg)](https://github.com/Stratadox/HydrationMapper)
+[![Source Code](https://img.shields.io/badge/source-github-blue.svg)](https://github.com/Stratadox/HydrationMapper)
+[![Implements](https://img.shields.io/badge/interfaces-github-blue.svg)](https://github.com/Stratadox/HydrationMapperContracts)
 [![Build Status](https://travis-ci.org/Stratadox/HydrationMapper.svg?branch=master)](https://travis-ci.org/Stratadox/HydrationMapper)
 [![Coverage Status](https://coveralls.io/repos/github/Stratadox/HydrationMapper/badge.svg?branch=master)](https://coveralls.io/github/Stratadox/HydrationMapper?branch=master)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Stratadox/HydrationMapper/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Stratadox/HydrationMapper/?branch=master)
-
-### Hydration 
-Interfaces for the above subpackages.
-
-[![Source Code](https://img.shields.io/badge/source-github-brightgreen.svg)](https://github.com/Stratadox/Hydration)
+[![Latest Stable Version](https://poser.pugx.org/stratadox/hydration-mapper/v/stable)](https://packagist.org/packages/stratadox/hydration-mapper)
+[![License](https://poser.pugx.org/stratadox/hydration-mapper/license)](https://packagist.org/packages/stratadox/hydration-mapper)
