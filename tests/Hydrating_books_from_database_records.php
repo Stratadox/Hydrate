@@ -37,7 +37,7 @@ class Hydrating_books_from_database_records extends TestCase
     /** @var Hydrates */
     private $books;
 
-    /** @scenario */
+    /** @test */
     function hydrating_a_query_result_into_an_object_structure()
     {
         $result = $this->database->query("SELECT * FROM `book`");
@@ -57,9 +57,10 @@ class Hydrating_books_from_database_records extends TestCase
         }
     }
 
-    /** @scenario */
+    /** @test */
     function accessing_data_that_was_not_in_the_original_result_set()
     {
+        /** @var Book $book */
         $book = $this->books->fromArray($this->selectBook('9781493634149'));
 
         $this->assertEquals(
@@ -79,12 +80,13 @@ class Hydrating_books_from_database_records extends TestCase
         );
     }
 
-    /** @scenario */
+    /** @test */
     function changing_database_values_before_lazily_loading_the_data_affects_the_loaded_object()
     {
+        /** @var Book $book */
         $book = $this->books->fromArray($this->selectBook('9781493634149'));
 
-        $randomContent = 'Random content: ' . microtime() .' / '. rand();
+        $randomContent = 'Random content: ' . microtime() .' / '. mt_rand();
 
         $this->insertText($randomContent);
 
@@ -94,24 +96,25 @@ class Hydrating_books_from_database_records extends TestCase
         );
     }
 
-    /** @scenario */
+    /** @test */
     function changing_database_values_after_lazily_loading_the_data_does_not_affect_the_loaded_object()
     {
+        /** @var Book $book */
         $book = $this->books->fromArray($this->selectBook('9781493634149'));
 
         $book->textInChapter(2);
 
-        $randomContent = 'Random content: ' . microtime() .' / '. rand();
+        $randomContent = 'Random content: ' . microtime() .' / '. mt_rand();
 
         $this->insertText($randomContent);
 
         $this->assertEquals(
-            "Purchase book for actual content of chapter 2...",
+            'Purchase book for actual content of chapter 2...',
             $book->textInChapter(2)
         );
     }
 
-    /** @scenario */
+    /** @test */
     function deriving_property_values_from_the_available_data()
     {
         $book = $this->books->fromArray($this->selectBook('9781493634149'));
@@ -119,7 +122,7 @@ class Hydrating_books_from_database_records extends TestCase
         $this->assertTrue($book->hasIsbnVersion13());
     }
 
-    /** @scenario */
+    /** @test */
     function choosing_the_class_in_single_table_inheritance()
     {
         $book = $this->books->fromArray($this->selectBook('9781493634149'));

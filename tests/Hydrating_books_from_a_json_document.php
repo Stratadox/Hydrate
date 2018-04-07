@@ -23,16 +23,18 @@ use Stratadox\Hydration\Mapper\Instruction\In;
 use Stratadox\Hydration\Mapper\Instruction\Relation\Choose;
 use Stratadox\Hydration\Mapper\Mapper;
 use Stratadox\Hydrator\Hydrates;
+use function strlen;
 
 class Hydrating_books_from_a_json_document extends TestCase
 {
     /** @var Hydrates */
     private $books;
 
-    /** @scenario */
+    /** @test */
     function hydrating_a_json_string_into_an_object_structure()
     {
         $json = file_get_contents(__DIR__.'/Book/Data/books.json');
+        /** @var mixed[][][] $result */
         $result = json_decode($json, true);
 
         /** @var Book[] $books */
