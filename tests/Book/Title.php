@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Stratadox\Hydrate\Test\Book;
 
@@ -13,12 +13,12 @@ class Title
         $this->title = $title;
     }
 
-    public function title() : string
+    public function title(): string
     {
         return $this->title;
     }
 
-    public function __toString() : string
+    public function __toString(): string
     {
         return $this->title();
     }

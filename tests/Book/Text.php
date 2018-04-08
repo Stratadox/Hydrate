@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Stratadox\Hydrate\Test\Book;
 
@@ -15,22 +15,22 @@ class Text implements Element
         $this->text = $text;
     }
 
-    public static function startEmpty() : Text
+    public static function startEmpty(): Text
     {
         return new static('');
     }
 
-    public function text() : string
+    public function text(): string
     {
         return $this->text;
     }
 
-    public function add(Text $toAdd, string $inBetween = PHP_EOL) : Text
+    public function add(Text $toAdd, string $inBetween = PHP_EOL): Text
     {
         return new Text($this->text() . $inBetween . $toAdd->text());
     }
 
-    public function __toString() : string
+    public function __toString(): string
     {
         return $this->text();
     }

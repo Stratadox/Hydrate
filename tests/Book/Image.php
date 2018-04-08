@@ -15,12 +15,12 @@ class Image implements Element
         $this->alt = $alt;
     }
 
-    public function url() : string
+    public function url(): string
     {
         return $this->url;
     }
 
-    public function __toString() : string
+    public function __toString(): string
     {
         return $this->alt;
     }

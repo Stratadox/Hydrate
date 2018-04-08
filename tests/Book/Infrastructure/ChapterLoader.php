@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Stratadox\Hydrate\Test\Book\Infrastructure;
 
@@ -34,12 +34,12 @@ class ChapterLoader extends Loader
         }
         $forTheChapter = (int) $forTheChapter;
         return $this->hydrator->fromArray([
-            'title' => $this->titleOfTheBook($book, $forTheChapter)[0]['title'],
+            'title'    => $this->titleOfTheBook($book, $forTheChapter)[0]['title'],
             'elements' => $this->elementsInThe($book, $forTheChapter)
         ]);
     }
 
-    private function elementsInThe(Book $toRead, int $chapter) : array
+    private function elementsInThe(Book $toRead, int $chapter): array
     {
         $query = $this->database->prepare(
             'SELECT 
@@ -47,7 +47,7 @@ class ChapterLoader extends Loader
               element.text as text, 
               element.src as src, 
               element.alt as alt 
-            FROM content JOIN element ON (
+            FROM element JOIN content ON (
               content.chapter_id = element.chapter_id AND 
               content.book_id = :book AND 
               content.chapter_number = :chapter
@@ -58,11 +58,11 @@ class ChapterLoader extends Loader
         return $this->fetchResults($query->execute());
     }
 
-    private function titleOfTheBook(Book $toRead, int $chapter) : array
+    private function titleOfTheBook(Book $toRead, int $chapter): array
     {
         $query = $this->database->prepare(
             'SELECT chapter.title as title
-                FROM content JOIN chapter ON (
+                FROM chapter JOIN content ON (
                     content.chapter_id = chapter.id AND
                     content.book_id = :book AND
                     content.chapter_number = :chapter
@@ -73,7 +73,7 @@ class ChapterLoader extends Loader
         return $this->fetchResults($query->execute());
     }
 
-    private function fetchResults(SQLite3Result $result) : array
+    private function fetchResults(SQLite3Result $result): array
     {
         $contents = [];
         while ($row = $result->fetchArray(SQLITE3_ASSOC)) {

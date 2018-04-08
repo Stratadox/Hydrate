@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Stratadox\Hydrate\Test\Book\Infrastructure;
 
@@ -15,22 +15,22 @@ class ChapterProxy extends Chapter implements Proxy
 {
     use Proxying;
 
-    public function title() : Title
+    public function title(): Title
     {
         return $this->__load()->title();
     }
 
-    public function elements() : Elements
+    public function elements(): Elements
     {
         return $this->__load()->elements();
     }
 
-    public function text() : Text
+    public function text(): Text
     {
         return $this->__load()->text();
     }
 
-    public function __toString() : string
+    public function __toString(): string
     {
         return $this->__load()->__toString();
     }

@@ -1,6 +1,5 @@
 <?php
-
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Stratadox\Hydrate\Test\Book;
 
@@ -20,18 +19,28 @@ class Author
         return new static($firstName, $lastName);
     }
 
-    public function firstName() : string
+    public function firstName(): string
     {
         return $this->firstName;
     }
 
-    public function lastName() : string
+    public function lastName(): string
     {
         return $this->lastName;
     }
 
-    public function __toString() : string
+    public function fullName(): string
     {
         return "{$this->firstName()} {$this->lastName()}";
+    }
+
+    public function __toString(): string
+    {
+        return $this->fullName();
+    }
+
+    public function isTheAuthor(Author $ofSomeOtherBook): bool
+    {
+        return $this->fullName() == $ofSomeOtherBook->fullName();
     }
 }

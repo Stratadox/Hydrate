@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types = 1);
 
 namespace Stratadox\Hydrate\Test\Book;
@@ -15,22 +14,22 @@ class Chapter
         $this->elements = $elements;
     }
 
-    public static function titled(string $title, Element ...$elements) : Chapter
+    public static function titled(string $title, Element ...$elements): Chapter
     {
         return new static(new Title($title), new Elements(...$elements));
     }
 
-    public function title() : Title
+    public function title(): Title
     {
         return $this->title;
     }
 
-    public function elements() : Elements
+    public function elements(): Elements
     {
         return $this->elements;
     }
 
-    public function text() : Text
+    public function text(): Text
     {
         $text = Text::startEmpty();
         $separator = '';
@@ -43,7 +42,7 @@ class Chapter
         return $text;
     }
 
-    public function __toString() : string
+    public function __toString(): string
     {
         return "{$this->title()}\n\n{$this->text()}";
     }

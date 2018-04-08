@@ -1,9 +1,10 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Stratadox\Hydrate\Test\Book\Infrastructure;
 
+use function assert;
 use SQLite3;
 use Stratadox\Hydrate\Test\Book\Book;
 use Stratadox\Hydrator\Hydrates;
@@ -26,8 +27,7 @@ class ChapterLoaderFactory implements ProducesProxyLoaders
     public static function withAccessTo(
         SQLite3 $database,
         Hydrates $hydrator
-    ) : ProducesProxyLoaders
-    {
+    ): ProducesProxyLoaders {
         return new static($database, $hydrator);
     }
 
@@ -35,16 +35,15 @@ class ChapterLoaderFactory implements ProducesProxyLoaders
         $theBook,
         string $ofTheProperty,
         $chapter = null
-    ) : LoadsProxiedObjects
-    {
+    ): LoadsProxiedObjects {
+        assert($theBook instanceof Book);
         return $this->createLoaderFor($theBook, $chapter);
     }
 
     private function createLoaderFor(
         Book $book,
         int $chapter = null
-    ) : ChapterLoader
-    {
+    ): ChapterLoader {
         return new ChapterLoader(
             $this->database,
             $this->hydrator,

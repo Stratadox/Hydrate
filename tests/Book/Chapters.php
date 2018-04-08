@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Stratadox\Hydrate\Test\Book;
 
@@ -18,27 +18,27 @@ class Chapters extends ImmutableCollection implements Alterable
         parent::__construct(...$chapters);
     }
 
-    public static function are(Chapter ...$chapters)
+    public static function are(Chapter ...$chapters): self
     {
-        return new static(...$chapters);
+        return new Chapters(...$chapters);
     }
 
-    public function textInChapter(int $index) : Text
+    public function textInChapter(int $index): Text
     {
         return $this->textFromChapterAt($this[$index]);
     }
 
-    public function textFromChapterAt(Chapter $selected) : Text
+    public function textFromChapterAt(Chapter $selected): Text
     {
         return $selected->text();
     }
 
-    public function __toString() : string
+    public function __toString(): string
     {
         return implode("\n\n", $this->toArray());
     }
 
-    public function current() : Chapter
+    public function current(): Chapter
     {
         return parent::current();
     }
