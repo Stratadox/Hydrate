@@ -18,6 +18,7 @@ use Stratadox\Hydrate\Test\Book\Book;
 use Stratadox\Hydrate\Test\Book\Chapters;
 use Stratadox\Hydrate\Test\Book\Isbn;
 use Stratadox\Hydrate\Test\Book\Title;
+use Stratadox\Hydrate\Test\Support\CrossPlatformMultiLine;
 use Stratadox\Hydration\Mapper\Instruction\Call;
 use Stratadox\Hydration\Mapper\Instruction\Has;
 use Stratadox\Hydration\Mapper\Instruction\In;
@@ -212,5 +213,7 @@ class Hydrating_books_from_database_records extends TestCase
     {
         $this->database = $this->setUpDatabase();
         $this->books = $this->bookHydratorUsing($this->database);
+
+        $this->registerComparator(CrossPlatformMultiLine::strings());
     }
 }
